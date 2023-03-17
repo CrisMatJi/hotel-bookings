@@ -31,7 +31,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+	<!-- Mapper Library -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.4.3</version>
+		</dependency>
 	</dependencies>
+	<!-- End Mapper Library -->
 
 	<build>
 		<plugins>
