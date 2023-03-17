@@ -37,8 +37,16 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.4.3</version>
 		</dependency>
-	</dependencies>
 	<!-- End Mapper Library -->
+	<!-- PostgreSQL Library -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+	<!-- End PostgreSQL Library -->
+	</dependencies>
+
+
 
 	<build>
 		<plugins>

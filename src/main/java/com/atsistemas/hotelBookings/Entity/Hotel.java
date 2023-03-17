@@ -1,6 +1,7 @@
 package com.atsistemas.hotelBookings.Entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "hotels")
@@ -8,26 +9,30 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "category")
     private String category;
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Availability> availabilities;
 
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Booking> bookings;
     public Hotel() {
     }
 
-    public Hotel(int id, String name, String category) {
+    public Hotel(Long id, String name, String category) {
         this.id = id;
         this.name = name;
         this.category = category;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

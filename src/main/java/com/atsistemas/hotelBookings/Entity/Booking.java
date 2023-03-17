@@ -8,9 +8,9 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     @Column(name = "id_hotel")
-    private int id_hotel;
+    private Long id_hotel;
     @Column(name = "date_from")
     private LocalDate date_from;
     @Column(name = "date_to")
@@ -18,10 +18,22 @@ public class Booking {
     @Column(name = "email")
     private String email;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
+    private Hotel hotel;
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
     public Booking() {
     }
 
-    public Booking(int id, int id_hotel, LocalDate date_from, LocalDate date_to, String email) {
+    public Booking(Long id, Long id_hotel, LocalDate date_from, LocalDate date_to, String email) {
         this.id = id;
         this.id_hotel = id_hotel;
         this.date_from = date_from;
@@ -29,19 +41,19 @@ public class Booking {
         this.email = email;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId_hotel() {
+    public Long getId_hotel() {
         return id_hotel;
     }
 
-    public void setId_hotel(int id_hotel) {
+    public void setId_hotel(Long id_hotel) {
         this.id_hotel = id_hotel;
     }
 

@@ -6,7 +6,7 @@ import com.atsistemas.hotelBookings.Mapper.DTOMapper;
 
 import org.modelmapper.ModelMapper;
 
-public class AvailabilityMapper implements DTOMapper<Availability, AvailabilityDTO> {
+public class AvailabilityMapperImpl implements DTOMapper<Availability, AvailabilityDTO> {
 
     private ModelMapper modelMapper = new ModelMapper();
 

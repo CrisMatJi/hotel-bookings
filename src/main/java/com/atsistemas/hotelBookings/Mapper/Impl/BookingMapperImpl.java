@@ -6,7 +6,7 @@ import com.atsistemas.hotelBookings.Mapper.DTOMapper;
 import org.modelmapper.ModelMapper;
 
 
-public class BookingMapper implements DTOMapper<Booking, BookingDTO> {
+public class BookingMapperImpl implements DTOMapper<Booking, BookingDTO> {
 
     private ModelMapper modelMapper = new ModelMapper();
 

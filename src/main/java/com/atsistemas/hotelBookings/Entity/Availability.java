@@ -14,29 +14,40 @@ public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Integer id;
+    Long id;
     @Column(name = "date")
     LocalDate date;
     @Column(name = "id_hotel")
     Integer id_hotel;
     @Column(name ="rooms")
     Integer rooms;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
+    private Hotel hotel;
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
     public Availability() {
     }
 
-    public Availability(Integer id, LocalDate date, Integer id_hotel, Integer rooms) {
+    public Availability(Long id, LocalDate date, Integer id_hotel, Integer rooms) {
         this.id = id;
         this.date = date;
         this.id_hotel = id_hotel;
         this.rooms = rooms;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
