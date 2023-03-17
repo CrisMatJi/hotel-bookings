@@ -14,7 +14,7 @@ public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    Integer id;
     @Column(name = "date")
     LocalDate date;
     @Column(name = "id_hotel")
@@ -36,18 +36,18 @@ public class Availability {
     public Availability() {
     }
 
-    public Availability(Long id, LocalDate date, Integer id_hotel, Integer rooms) {
+    public Availability(Integer id, LocalDate date, Integer id_hotel, Integer rooms) {
         this.id = id;
         this.date = date;
         this.id_hotel = id_hotel;
         this.rooms = rooms;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

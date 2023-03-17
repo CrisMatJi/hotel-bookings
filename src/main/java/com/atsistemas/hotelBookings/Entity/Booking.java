@@ -8,9 +8,9 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @Column(name = "id_hotel")
-    private Long id_hotel;
+    private Integer id_hotel;
     @Column(name = "date_from")
     private LocalDate date_from;
     @Column(name = "date_to")
@@ -33,7 +33,7 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(Long id, Long id_hotel, LocalDate date_from, LocalDate date_to, String email) {
+    public Booking(Integer id, Integer id_hotel, LocalDate date_from, LocalDate date_to, String email) {
         this.id = id;
         this.id_hotel = id_hotel;
         this.date_from = date_from;
@@ -41,19 +41,19 @@ public class Booking {
         this.email = email;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getId_hotel() {
+    public Integer getId_hotel() {
         return id_hotel;
     }
 
-    public void setId_hotel(Long id_hotel) {
+    public void setId_hotel(Integer id_hotel) {
         this.id_hotel = id_hotel;
     }
 

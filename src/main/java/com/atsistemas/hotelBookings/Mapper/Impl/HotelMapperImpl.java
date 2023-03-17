@@ -5,8 +5,11 @@ import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Mapper.DTOMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.List;
+@Component
 public class HotelMapperImpl implements DTOMapper<Hotel, HotelDTO> {
 
     private ModelMapper modelMapper = new ModelMapper();
@@ -19,6 +22,9 @@ public class HotelMapperImpl implements DTOMapper<Hotel, HotelDTO> {
     @Override
     public HotelDTO toDTO(Hotel entity) {
         return modelMapper.map(entity, HotelDTO.class);
+    }
+    public List<HotelDTO> listToDTO(List<Hotel> listaHotel){
+        return modelMapper.map(listaHotel, List.class);
     }
 }
 
