@@ -24,7 +24,7 @@ public class HotelController {
     @Autowired
     HotelMapperImpl hotelMapper;
     //Consultamos el listado de hoteles
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HotelDTO>> getAllHotels() {
         List<Hotel> hotels = hotelService.getAllHotels();
         if (hotels == null || hotels.isEmpty()) {
