@@ -44,6 +44,22 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 	<!-- End PostgreSQL Library -->
+	<!-- Jackson Library -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate5</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+	<!-- End Jackson Library -->
 	</dependencies>
 
 

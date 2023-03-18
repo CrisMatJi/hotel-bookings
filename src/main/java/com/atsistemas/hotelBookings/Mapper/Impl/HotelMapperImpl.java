@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
+import java.util.Optional;
+
 @Component
 public class HotelMapperImpl implements DTOMapper<Hotel, HotelDTO> {
 
@@ -26,5 +28,6 @@ public class HotelMapperImpl implements DTOMapper<Hotel, HotelDTO> {
     public List<HotelDTO> listToDTO(List<Hotel> listaHotel){
         return modelMapper.map(listaHotel, List.class);
     }
+
 }
 

@@ -16,15 +16,16 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/hotels")
+//@RequestMapping("/hotels")
 public class HotelController {
     @Autowired
     HotelServiceImpl hotelService;
 
     @Autowired
     HotelMapperImpl hotelMapper;
+
     //Consultamos el listado de hoteles
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/hotels", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HotelDTO>> getAllHotels() {
         List<Hotel> hotels = hotelService.getAllHotels();
         if (hotels == null || hotels.isEmpty()) {
@@ -33,9 +34,10 @@ public class HotelController {
         List<HotelDTO> hotelDTOs = hotelMapper.listToDTO(hotels);
         return ResponseEntity.ok(hotelDTOs);
     }
+
     //Consultamos un Hotel , según su ID
-    @GetMapping(value ="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HotelDTO> getHotelById(@PathVariable Integer id) {
+    @GetMapping(value = "/hotels/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HotelDTO> getHotelById(@PathVariable(value = "id") Integer id) {
         Optional<Hotel> optionalHotel = hotelService.getHotelById(id);
         if (optionalHotel.isPresent()) {
             Hotel hotel = optionalHotel.get();
@@ -45,8 +47,13 @@ public class HotelController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 }
+
+
+
+
+
+
+
 
 
