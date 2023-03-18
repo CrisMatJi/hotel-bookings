@@ -16,11 +16,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/hotels")
 public class HotelController {
-    @Autowired
-    HotelServiceImpl hotelService;
 
-    @Autowired
-    HotelMapperImpl hotelMapper;
+    private HotelServiceImpl hotelService;
+    private HotelMapperImpl hotelMapper;
+    public HotelController(HotelServiceImpl hotelService, HotelMapperImpl hotelMapper){
+        this.hotelService = hotelService;
+        this.hotelMapper = hotelMapper;
+    }
 
     //Consultamos el listado de hoteles
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,7 +50,7 @@ public class HotelController {
     //Creamos un Hotel
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HotelDTO> createHotel(@Valid @RequestBody HotelDTO hotelDTO) {
+    public ResponseEntity<HotelDTO> createHotel(@RequestBody HotelDTO hotelDTO) {
         try {
             Hotel hotel = hotelMapper.toEntity(hotelDTO);
             Hotel createdHotel = hotelService.createHotel(hotel);

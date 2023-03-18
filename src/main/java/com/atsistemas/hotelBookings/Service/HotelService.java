@@ -10,4 +10,6 @@ public interface HotelService {
     Optional<Hotel> getHotelById(Integer id);
 
     Hotel createHotel(Hotel hotel);
+
+
 }

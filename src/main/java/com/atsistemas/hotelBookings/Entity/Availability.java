@@ -21,7 +21,7 @@ public class Availability {
     Integer id_hotel;
     @Column(name ="rooms")
     Integer rooms;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
     private Hotel hotel;
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class HotelMapperImpl implements DTOMapper<Hotel, HotelDTO> {
@@ -25,8 +26,10 @@ public class HotelMapperImpl implements DTOMapper<Hotel, HotelDTO> {
     public HotelDTO toDTO(Hotel entity) {
         return modelMapper.map(entity, HotelDTO.class);
     }
-    public List<HotelDTO> listToDTO(List<Hotel> listaHotel){
-        return modelMapper.map(listaHotel, List.class);
+    public List<HotelDTO> listToDTO(List<Hotel> listaHotel) {
+        return listaHotel.stream()
+                .map(hotel -> modelMapper.map(hotel, HotelDTO.class))
+                .collect(Collectors.toList());
     }
 
 }
