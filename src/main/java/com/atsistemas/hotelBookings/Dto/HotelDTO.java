@@ -3,12 +3,12 @@ package com.atsistemas.hotelBookings.Dto;
 public class HotelDTO {
     private Integer id;
     private String name;
-    private String category;
+    private Integer category;
 
     public HotelDTO() {
     }
 
-    public HotelDTO(Integer id, String name, String category) {
+    public HotelDTO(Integer id, String name, Integer category) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -30,11 +30,11 @@ public class HotelDTO {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 }

@@ -21,4 +21,7 @@ public class HotelServiceImpl implements HotelService {
     public Optional<Hotel> getHotelById(Integer id) {
         return hotelRepository.findById(id);
     }
+    public Hotel createHotel(Hotel hotel){
+        return hotelRepository.save(hotel);
+    }
 }

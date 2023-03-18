@@ -13,7 +13,7 @@ public class Hotel {
     @Column(name = "name")
     private String name;
     @Column(name = "category")
-    private String category;
+    private Integer category;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Availability> availabilities;
@@ -24,7 +24,7 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(Integer id, String name, String category) {
+    public Hotel(Integer id, String name, Integer category) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -46,11 +46,11 @@ public class Hotel {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 }
