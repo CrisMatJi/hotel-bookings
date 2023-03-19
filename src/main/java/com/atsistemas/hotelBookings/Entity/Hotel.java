@@ -1,5 +1,7 @@
 package com.atsistemas.hotelBookings.Entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,6 +16,13 @@ public class Hotel {
     private String name;
     @Column(name = "category")
     private Integer category;
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Availability> availabilities;
+
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Booking> bookings;
 
     public List<Availability> getAvailabilities() {
         return availabilities;
@@ -30,13 +39,6 @@ public class Hotel {
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
-
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Availability> availabilities;
-
-
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Booking> bookings;
     public Hotel() {
     }
 

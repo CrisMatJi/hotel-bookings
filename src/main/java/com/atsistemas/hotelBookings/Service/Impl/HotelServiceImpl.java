@@ -6,8 +6,10 @@ import com.atsistemas.hotelBookings.Service.HotelService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -19,7 +21,7 @@ public class HotelServiceImpl implements HotelService {
     }
     @Override
     public List<Hotel> getAllHotels() {
-        return hotelRepository.findAll();
+        return hotelRepository.findAll().stream().sorted(Comparator.comparing(Hotel::getId)).collect(Collectors.toList());
     }
     @Override
     public Optional<Hotel> getHotelById(Integer id) {
@@ -28,7 +30,8 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel createHotel(Hotel hotel){
-        return hotelRepository.save(hotel);
+        Hotel createdHotel = hotelRepository.save(hotel);
+        return createdHotel;
     }
 
 

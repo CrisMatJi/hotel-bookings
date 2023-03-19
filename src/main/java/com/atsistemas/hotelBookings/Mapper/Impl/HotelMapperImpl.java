@@ -2,18 +2,15 @@ package com.atsistemas.hotelBookings.Mapper.Impl;
 
 import com.atsistemas.hotelBookings.Dto.HotelDTO;
 import com.atsistemas.hotelBookings.Entity.Hotel;
-import com.atsistemas.hotelBookings.Mapper.DTOMapper;
+import com.atsistemas.hotelBookings.Mapper.HotelMapper;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class HotelMapperImpl implements DTOMapper<Hotel, HotelDTO> {
+public class HotelMapperImpl implements HotelMapper<Hotel, HotelDTO> {
 
     private ModelMapper modelMapper = new ModelMapper();
     

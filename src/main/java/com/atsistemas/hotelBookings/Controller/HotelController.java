@@ -24,31 +24,39 @@ public class HotelController {
         this.hotelMapper = hotelMapper;
     }
 
-    //Consultamos el listado de hoteles
+    //Consultamos el listado de hoteles y los devolvemos odernados por ID
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HotelDTO>> getAllHotels() {
-        List<Hotel> hotels = hotelService.getAllHotels();
-        if (hotels == null || hotels.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        List<HotelDTO> hotelDTOs = hotelMapper.listToDTO(hotels);
-        return ResponseEntity.ok(hotelDTOs);
-    }
+        try {
 
+            List<Hotel> hotels = hotelService.getAllHotels();
+            if (hotels == null || hotels.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            List<HotelDTO> hotelDTOs = hotelMapper.listToDTO(hotels);
+            return ResponseEntity.ok(hotelDTOs);
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     //Consultamos un Hotel , según su ID
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HotelDTO> getHotelById(@PathVariable(value = "id") Integer id) {
-        Optional<Hotel> optionalHotel = hotelService.getHotelById(id);
-        if (optionalHotel.isPresent()) {
-            Hotel hotel = optionalHotel.get();
-            HotelDTO hotelDTO = hotelMapper.toDTO(hotel);
-            return ResponseEntity.ok(hotelDTO);
-        } else {
-            return ResponseEntity.notFound().build();
+        try {
+            Optional<Hotel> optionalHotel = hotelService.getHotelById(id);
+            if (optionalHotel.isPresent()) {
+                Hotel hotel = optionalHotel.get();
+                HotelDTO hotelDTO = hotelMapper.toDTO(hotel);
+                return ResponseEntity.ok(hotelDTO);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    //Creamos un Hotel
-
+    //Creamos un Hotel, no permitímos al usuario que nos envíe el ID, lo ignoramos.
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HotelDTO> createHotel(@RequestBody HotelDTO hotelDTO) {
         try {
@@ -61,6 +69,11 @@ public class HotelController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+
+
+
+
 
 }
 
