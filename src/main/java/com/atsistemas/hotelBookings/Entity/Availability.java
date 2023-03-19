@@ -6,11 +6,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name="availabilities")
 public class Availability {
-    /*
-        Hotels(id, name, category): Datos de los hoteles
-        Availabilities(id, date, id_hotel, rooms): Disponibilidad de habitaciones por dia yhotel. La columna rooms marca la disponibilidad actualizada del hotel.
-        Bookings(id, id_hotel, date_from, date_to, email): Datos de las reservas.
-    */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

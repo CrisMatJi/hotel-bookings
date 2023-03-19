@@ -5,7 +5,7 @@ import com.atsistemas.hotelBookings.Entity.Hotel;
 
 import java.util.List;
 
-public interface HotelMapper<E, D> {
+public interface HotelMapper<Hotel, HotelDTO> {
     Hotel toEntity(HotelDTO hotelDTO);
     HotelDTO toDTO(Hotel hotel);
     List<HotelDTO> listToDTO(List<Hotel> listaHotel);

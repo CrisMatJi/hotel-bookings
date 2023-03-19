@@ -30,9 +30,10 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel createHotel(Hotel hotel){
-        Hotel createdHotel = hotelRepository.save(hotel);
-        return createdHotel;
+        return hotelRepository.save(hotel);
     }
+
+
 
 
 }

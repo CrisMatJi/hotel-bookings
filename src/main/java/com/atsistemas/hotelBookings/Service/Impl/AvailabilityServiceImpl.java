@@ -5,10 +5,12 @@ import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Repository.AvailabilityRepository;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.atsistemas.hotelBookings.Service.AvailabilityService;
+import com.atsistemas.hotelBookings.Utilities.FilterAvailability;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,6 +50,10 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     }
 
 
+    public List<Hotel> findByavailability(FilterAvailability filterAvailability) {
+
+        return null;
+    }
 }
 
 

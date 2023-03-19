@@ -1,9 +1,9 @@
-package com.atsistemas.hotelBookings.Mapper.Impl;
-
-import com.atsistemas.hotelBookings.Dto.AvailabilityDTO;
-import com.atsistemas.hotelBookings.Dto.HotelDTO;
-import com.atsistemas.hotelBookings.Entity.Availability;
-import com.atsistemas.hotelBookings.Entity.Hotel;
+//package com.atsistemas.hotelBookings.Mapper.Impl;
+//
+//import com.atsistemas.hotelBookings.Dto.AvailabilityDTO;
+//import com.atsistemas.hotelBookings.Dto.HotelDTO;
+//import com.atsistemas.hotelBookings.Entity.Availability;
+//import com.atsistemas.hotelBookings.Entity.Hotel;
 //import com.atsistemas.hotelBookings.Mapper.AvailabilityMapper;
 //import com.atsistemas.hotelBookings.Mapper.HotelMapper;
 //
@@ -24,17 +24,6 @@ import com.atsistemas.hotelBookings.Entity.Hotel;
 //    public AvailabilityDTO toDTO(Availability entity) {
 //        return modelMapper.map(entity, AvailabilityDTO.class);
 //    }
-//
-//    @Override
-//    public Hotel toEntity(HotelDTO hotelDTO) {
-//        return null;
-//    }
-//
-//    @Override
-//    public HotelDTO toDTO(Hotel hotel) {
-//        return null;
-//    }
-//
 //    @Override
 //    public List<HotelDTO> listToDTO(List<Hotel> listaHotel) {
 //        return null;

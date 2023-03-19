@@ -56,7 +56,7 @@ public class HotelController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    //Creamos un Hotel, no permitímos al usuario que nos envíe el ID, lo ignoramos.
+    //Creamos un Hotel, en caso de que el cliente nos envíe el ID y coincide con el que tenemos lo actualiza. En caso de que no exista ID o no lo envíe, lo creamos.
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HotelDTO> createHotel(@RequestBody HotelDTO hotelDTO) {
         try {
