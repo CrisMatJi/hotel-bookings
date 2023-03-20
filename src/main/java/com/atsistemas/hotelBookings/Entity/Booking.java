@@ -1,5 +1,9 @@
 package com.atsistemas.hotelBookings.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 @Entity
@@ -18,7 +22,7 @@ public class Booking {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
     private Hotel hotel;
 

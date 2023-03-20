@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class AvailabilityController {
         this.hotelMapperImpl = hotelMapperImpl;
     }
 
-    //Insertamos disponibilidad segun fecha de entrada y salida . Control de excepciones, no tratamos en este caso con DTO
+    //Insertamos disponibilidad segun fecha de entrada y salida . Tenemos control de excepciones y no tratamos en este caso con DTO
     @PostMapping("/{hotelId}")
     public ResponseEntity<Void> createAvailability(
             @PathVariable Integer hotelId,
@@ -49,20 +50,27 @@ public class AvailabilityController {
         }
     }
 
-    //    Consulta de disponibilidad: devolverá qué hoteles tienen disponibilidad dadas
-//    unas fechas de entrada y salida (fechas obligatorio), pudiendo filtrar por nombre y categoría del hotel. Para tener disponibilidad entre las fechas, tiene que haber disponible al menos una habitación para el hotel en cada día del rango.
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HotelDTO>> consultAvailability(FilterAvailability filterAvailability) {
-        try {
-            List<Hotel> hotels = availabilityServiceImpl.findByavailability(filterAvailability);
-            if (hotels == null || hotels.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            List<HotelDTO> hotelDTOs = hotelMapperImpl.listToDTO(hotels);
-            return ResponseEntity.ok(hotelDTOs);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
 
-    }
+
+
+
+
+
+
+//    //    Consulta de disponibilidad: devolverá qué hoteles tienen disponibilidad dadas
+////    unas fechas de entrada y salida (fechas obligatorio), pudiendo filtrar por nombre y categoría del hotel. Para tener disponibilidad entre las fechas, tiene que haber disponible al menos una habitación para el hotel en cada día del rango.
+//    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<HotelDTO>> consultAvailability(FilterAvailability filterAvailability) {
+//        try {
+//            List<Hotel> hotels = availabilityServiceImpl.findByavailability(filterAvailability);
+//            if (hotels == null || hotels.isEmpty()) {
+//                return ResponseEntity.noContent().build();
+//            }
+//            List<HotelDTO> hotelDTOs = hotelMapperImpl.listToDTO(hotels);
+//            return ResponseEntity.ok(hotelDTOs);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//
+//    }
 }

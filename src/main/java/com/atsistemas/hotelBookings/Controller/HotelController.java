@@ -3,13 +3,10 @@ import com.atsistemas.hotelBookings.Dto.HotelDTO;
 import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Mapper.Impl.HotelMapperImpl;
 import com.atsistemas.hotelBookings.Service.Impl.HotelServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +53,7 @@ public class HotelController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    //Creamos un Hotel, en caso de que el cliente nos envíe el ID y coincide con el que tenemos lo actualiza. En caso de que no exista ID o no lo envíe, lo creamos.
+    //Creamos un Hotel, sólo sin ID.
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HotelDTO> createHotel(@RequestBody HotelDTO hotelDTO) {
         try {
@@ -69,6 +66,23 @@ public class HotelController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    //Actualizamos Hotel y nos aseguramos que nos envíe un ID.
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HotelDTO> updateHotel(@RequestBody HotelDTO hotelDTO) {
+        try {
+            Hotel hotel = hotelMapper.toEntity(hotelDTO);
+            if (hotelService.getHotelById(hotel.getId()).isEmpty()) {
+                throw new IllegalArgumentException("Para crear un nuevo Hotel , use método POST");
+            }
+            Hotel createdHotel = hotelService.createHotel(hotel);
+            HotelDTO createdHotelDTO = hotelMapper.toDTO(createdHotel);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdHotelDTO);
+        } catch (Exception e) {
+            // Manejo de excepciones
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 
 
 

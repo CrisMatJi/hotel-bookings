@@ -4,7 +4,6 @@ import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.atsistemas.hotelBookings.Service.HotelService;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
