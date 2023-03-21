@@ -14,11 +14,10 @@ public interface BookingRepository extends JpaRepository<Booking,Integer>, JpaSp
     @Query("SELECT b FROM Booking b WHERE b.hotel.id = :hotelId AND b.date_to >= :startDate AND b.date_from <= :endDate")
     List<Booking> findByHotelAndDates(@Param("hotelId") Integer hotelId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-//    @Query("SELECT b FROM Booking b JOIN FETCH b.hotel WHERE b.id = :bookingId")
-//    Optional<Booking> findBookingWithHotelById(@Param("bookingId") Integer bookingId);
-//
     @Query("SELECT b FROM Booking b JOIN FETCH b.hotel WHERE b.id = :bookingId")
     Optional<Booking> findBookingWithHotelById(@Param("bookingId") Integer bookingId);
+
+
 
 
 

@@ -3,10 +3,15 @@ import com.atsistemas.hotelBookings.Dto.HotelDTO;
 import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Mapper.Impl.HotelMapperImpl;
 import com.atsistemas.hotelBookings.Service.Impl.HotelServiceImpl;
+import com.atsistemas.hotelBookings.Utilities.FilterBooking;
+import com.atsistemas.hotelBookings.Utilities.FilterHotel;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +89,23 @@ public class HotelController {
     }
 
 
+    @GetMapping(value="/availabilities", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<HotelDTO>> consultAvailability(@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+                                                              @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+                                                              @RequestParam(required = false) String name,
+                                                              @RequestParam(required = false) Integer category) {
+        try {
+            List<Hotel> hotels = hotelService.findByAvailability(startDate,endDate,name, category);
+            if (hotels == null || hotels.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            List<HotelDTO> hotelDTOs = hotelMapper.listToDTO(hotels);
+            return ResponseEntity.ok(hotelDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
 
 
 

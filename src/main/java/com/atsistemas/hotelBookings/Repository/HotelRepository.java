@@ -1,34 +1,32 @@
 package com.atsistemas.hotelBookings.Repository;
 
 import com.atsistemas.hotelBookings.Entity.Hotel;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 
 public interface HotelRepository extends JpaRepository<Hotel,Integer>, JpaSpecificationExecutor<Hotel> {
+    @Query("SELECT h FROM Hotel h JOIN h.availabilities a WHERE a.date BETWEEN :startDate AND :endDate AND a.rooms>0")
+    Optional<List<Hotel>>findHotelsByAvailability(@Param("startDate") LocalDate startDate ,@Param("endDate") LocalDate endDate);
+    @Query("SELECT h FROM Hotel h WHERE h.id IN (" +
+            "SELECT a.hotel.id FROM Availability a " +
+            "WHERE a.date BETWEEN :startDate AND :endDate AND a.rooms > 0 " +
+            "GROUP BY a.hotel.id " +
+            "HAVING COUNT(*) = :days)")
+    Optional<List<Hotel>>findHotelsByAvailability2(@Param("startDate") LocalDate startDate ,@Param("endDate") LocalDate endDate,@Param("days") Long days);
 
-//    @Query("SELECT h FROM Hotel h " +
-//            "WHERE h.id NOT IN (" +
-//            "SELECT a.idHotel FROM Availability a " +
-//            "WHERE a.date >= :fechaEntrada AND a.date <= :fechaSalida " +
-//            "AND a.rooms <= (" +
-//            "SELECT COALESCE(SUM(b.rooms), 0) FROM Booking b " +
-//            "WHERE b.idHotel = a.idHotel AND (" +
-//            "(b.dateFrom <= :fechaEntrada AND b.dateTo >= :fechaEntrada) " +
-//            "OR (b.dateFrom <= :fechaSalida AND b.dateTo >= :fechaSalida) " +
-//            "OR (b.dateFrom >= :fechaEntrada AND b.dateTo <= :fechaSalida)" +
-//            ")" +
-//            ")" +
-//            ") " +
-//            // filtro por nombre del hotel (opcional)
-//            "AND (:nombreHotel IS NULL OR h.name LIKE %:nombreHotel%) " +
-//            // filtro por categoría del hotel (opcional)
-//            "AND (:categoriaHotel IS NULL OR h.category = :categoriaHotel)")
-//    List<Hotel> findHotelsWithAvailability(
-//            @Param("fechaEntrada") LocalDate fechaEntrada,
-//            @Param("fechaSalida") LocalDate fechaSalida,
-//            @Param("nombreHotel") String nombreHotel,
-//            @Param("categoriaHotel") Integer categoriaHotel);
+
+
+
+
+
 
 
 }

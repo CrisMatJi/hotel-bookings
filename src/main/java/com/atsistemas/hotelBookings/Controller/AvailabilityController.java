@@ -1,9 +1,9 @@
 package com.atsistemas.hotelBookings.Controller;
 
-import com.atsistemas.hotelBookings.Dto.FilterHotel;
 import com.atsistemas.hotelBookings.Mapper.Impl.HotelMapperImpl;
 import com.atsistemas.hotelBookings.Service.Impl.AvailabilityServiceImpl;
 import com.atsistemas.hotelBookings.Utilities.FilterBooking;
+import com.atsistemas.hotelBookings.Utilities.FilterHotel;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,20 +23,19 @@ public class AvailabilityController {
 
 
     private AvailabilityServiceImpl availabilityServiceImpl;
-    private HotelMapperImpl hotelMapperImpl;
 
 
-    AvailabilityController(AvailabilityServiceImpl availabilityService, HotelMapperImpl hotelMapperImpl) {
+
+    AvailabilityController(AvailabilityServiceImpl availabilityService) {
         this.availabilityServiceImpl = availabilityService;
-        this.hotelMapperImpl = hotelMapperImpl;
     }
 
     //Insertamos disponibilidad segun fecha de entrada y salida . Tenemos control de excepciones y no tratamos en este caso con DTO
     @PostMapping("/{hotelId}")
     public ResponseEntity<Void> createAvailability(
             @PathVariable Integer hotelId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             @RequestParam Integer rooms) {
         try {
             availabilityServiceImpl.createAvailability(hotelId, startDate, endDate, rooms);
@@ -48,20 +47,5 @@ public class AvailabilityController {
         }
     }
 
-    //    Consulta de disponibilidad: devolverá qué hoteles tienen disponibilidad dadas
-//    unas fechas de entrada y salida (fechas obligatorio), pudiendo filtrar por nombre y categoría del hotel. Para tener disponibilidad entre las fechas, tiene que haber disponible al menos una habitación para el hotel en cada día del rango.
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HotelDTO>> consultAvailability(FilterBooking filterBooking, FilterHotel filterHotel) {
-        try {
-            List<Hotel> hotels = availabilityServiceImpl.findByavailability(filterBooking, filterHotel);
-            if (hotels == null || hotels.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            List<HotelDTO> hotelDTOs = hotelMapperImpl.listToDTO(hotels);
-            return ResponseEntity.ok(hotelDTOs);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
 
-    }
 }
