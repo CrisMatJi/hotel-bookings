@@ -1,12 +1,19 @@
 package com.atsistemas.hotelBookings.Service.Impl;
+import com.atsistemas.hotelBookings.Dto.FilterHotel;
 import com.atsistemas.hotelBookings.Entity.Availability;
 import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Repository.AvailabilityRepository;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.atsistemas.hotelBookings.Service.AvailabilityService;
 import com.atsistemas.hotelBookings.Utilities.FilterAvailability;
+import com.atsistemas.hotelBookings.Utilities.FilterBooking;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -49,14 +56,49 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     }
 
     @Override
-    public List<Hotel> findByavailability(FilterAvailability filterAvailability) {
-        return null;
+    public List<Hotel> findByavailability(FilterBooking filterBooking, FilterHotel filterHotel) {
+        Specification<Hotel> spec = Specification.where(null);
+        spec = dateFilter(filterBooking.getDate_from(), filterBooking.getDate_to());
+
+        if (filterHotel.getName() != null) {
+            Specification<Hotel> nameSpec = nameFilter(filterHotel.getName());
+            spec = spec.and(nameSpec);
+        }
+
+        if (filterHotel.getCategory() != null) {
+            Specification<Hotel> categorySpec = categoryFilter(filterHotel.getCategory());
+            spec = spec.and(categorySpec);
+        }
+
+        return hotelRepository.findAll(spec);
+    }
+
+    public Specification<Hotel> categoryFilter(Integer category){
+        Specification<Hotel> categorySpec = (Root<Hotel> root, CriteriaQuery<?> query,
+        CriteriaBuilder criteriaBuilder) -> criteriaBuilder.equal(root.get("category"),category);
+        return categorySpec;
+    }
+
+    public Specification<Hotel> nameFilter(String name){
+        Specification<Hotel> nameSpec = (Root<Hotel> root, CriteriaQuery<?> query,
+        CriteriaBuilder criteriaBuilder) -> criteriaBuilder.equal(root.get("name"),name);
+        return nameSpec;
     }
 
 
-//    public Specification<Hotel> filtroDate(LocalDate startDate, LocalDate endDate) {
-//        Specification<Hotel> disponibilidadSpec = (Root<Hotel> root, CriteriaQuery<?> query,
-//                                                   CriteriaBuilder criteriaBuilder) -> {
+    public Specification<Hotel> dateFilter(LocalDate startDate, LocalDate endDate) {
+        Specification<Hotel> dateSpec = (Root<Hotel> root, CriteriaQuery<?> query,
+                                                   CriteriaBuilder criteriaBuilder) ->
+                criteriaBuilder.and(
+                        criteriaBuilder.between(root.get("startDate"), startDate, endDate),
+                        criteriaBuilder.between(root.get("endDate"), startDate, endDate)
+                );
+
+
+
+
+
+
 //            Subquery<Long> subquery = query.subquery(Long.class);
 //            Root<Availability> subRoot = subquery.from(Availability.class);
 //            subquery.select(subRoot.get("hotel").get("id"))
@@ -65,8 +107,9 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 //                            criteriaBuilder.between(subRoot.get("fechaSalida"), startDate, endDate)
 //                    ));
 //            return criteriaBuilder.in(root.get("id")).value(subquery);
-//        };
-//        return disponibilidadSpec;
-//    }
+        return dateSpec;
+        };
 
-}
+    }
+
+

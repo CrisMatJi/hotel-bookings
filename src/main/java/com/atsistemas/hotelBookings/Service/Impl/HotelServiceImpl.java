@@ -1,10 +1,15 @@
 package com.atsistemas.hotelBookings.Service.Impl;
 
+import com.atsistemas.hotelBookings.Entity.Availability;
+import com.atsistemas.hotelBookings.Entity.Booking;
 import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.atsistemas.hotelBookings.Service.HotelService;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +37,7 @@ public class HotelServiceImpl implements HotelService {
         return hotelRepository.save(hotel);
     }
 
-
+//
 
 
 }
