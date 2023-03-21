@@ -8,6 +8,7 @@ import com.atsistemas.hotelBookings.Repository.BookingRepository;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.atsistemas.hotelBookings.Service.BookingService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -67,4 +68,22 @@ public class BookingServiceImpl implements BookingService {
 
     }
 
+    public void deleteBookingById(Integer bookingId) {
+        Optional<Booking> optionalBooking = Optional.ofNullable(bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new EntityNotFoundException("Booking not found with id: " + bookingId)));
+            if (optionalBooking.isPresent()) {
+                Booking booking = optionalBooking.get();
+                Hotel hotel = hotelRepository.findById(booking.getId_hotel()).get();
+                for (LocalDate date = booking.getDate_from(); date.isBefore(booking.getDate_to().plusDays(1)); date = date.plusDays(1)) {
+                    Optional<Availability> existingAvailability = availabilityRepository.findByHotelAndDate(hotel, date);
+                    if (existingAvailability.isPresent()) {
+                        Availability availability = existingAvailability.get();
+                        availability.setRooms(availability.getRooms() + 1);
+                        availabilityRepository.save(availability);
+                bookingRepository.deleteById(bookingId);
+                        }
+                }
+
+            }
+    }
 }

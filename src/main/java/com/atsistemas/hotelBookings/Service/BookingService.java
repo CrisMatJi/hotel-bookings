@@ -9,5 +9,5 @@ public interface BookingService {
     Booking createBooking(Booking booking);
     List<Booking> getBookingsByHotelAndDates(Integer hotelId, LocalDate startDate, LocalDate endDate);
     Booking getBookingWithHotel(Integer bookingId);
-
+    void deleteBookingById( Integer bookingId);
 }

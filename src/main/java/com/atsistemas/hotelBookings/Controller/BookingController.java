@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,10 +58,10 @@ public class BookingController {
     }
 
 
-    //Consultar las reservas de un hotel en una fecha determinada
+    //Consultar reserva por ID y el hotel asociado
     @GetMapping("/search/{id}")
     public ResponseEntity<Booking> getBookingWithHotel(
-            @PathVariable(value = "id") Integer bookingId){
+            @PathVariable(value = "id") Integer bookingId) {
         try {
             Booking booking = bookingService.getBookingWithHotel(bookingId);
             BookingDTO bookingDTO = bookingMapper.toDTO(booking);
@@ -71,7 +72,12 @@ public class BookingController {
         }
     }
 
-
+    //Eliminar una reserva, controlamos si existe el ID dentro del método y restamos las habitaciones para esas fechas.
+    @DeleteMapping(value = "/delete/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void eliminarPelicula(@PathVariable("id") Integer bookingId) {
+            bookingService.deleteBookingById(bookingId);
+    }
 }
 
 

@@ -1,23 +1,14 @@
 package com.atsistemas.hotelBookings.Controller;
 
-import com.atsistemas.hotelBookings.Dto.AvailabilityDTO;
-import com.atsistemas.hotelBookings.Dto.HotelDTO;
-import com.atsistemas.hotelBookings.Entity.Hotel;
-import com.atsistemas.hotelBookings.Mapper.HotelMapper;
 import com.atsistemas.hotelBookings.Mapper.Impl.HotelMapperImpl;
 import com.atsistemas.hotelBookings.Service.Impl.AvailabilityServiceImpl;
-import com.atsistemas.hotelBookings.Utilities.FilterAvailability;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("/availabilities")
