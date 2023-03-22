@@ -60,12 +60,12 @@ public class BookingController {
 
     //Consultar reserva por ID y el hotel asociado
     @GetMapping("/search/{id}")
-    public ResponseEntity<Booking> getBookingWithHotel(
+    public ResponseEntity<BookingDTO> getBookingWithHotel(
             @PathVariable(value = "id") Integer bookingId) {
         try {
             Booking booking = bookingService.getBookingWithHotel(bookingId);
             BookingDTO bookingDTO = bookingMapper.toDTO(booking);
-            return ResponseEntity.ok().body(booking);
+            return ResponseEntity.ok().body(bookingDTO);
         } catch (Exception e) {
             // Manejo de excepciones
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

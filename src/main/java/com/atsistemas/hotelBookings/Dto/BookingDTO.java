@@ -10,17 +10,26 @@ public class BookingDTO {
     private LocalDate date_from;
     private LocalDate date_to;
     private String email;
+    private Hotel hotel;
 
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
     public BookingDTO() {
     }
 
-    public BookingDTO(Integer id, Integer id_hotel, LocalDate date_from, LocalDate date_to, String email) {
+    public BookingDTO(Integer id, Integer id_hotel, LocalDate date_from, LocalDate date_to, String email, Hotel hotel ) {
         this.id = id;
         this.id_hotel = id_hotel;
         this.date_from = date_from;
         this.date_to = date_to;
         this.email = email;
+        this.hotel = hotel;
     }
 
     public Integer getId() {

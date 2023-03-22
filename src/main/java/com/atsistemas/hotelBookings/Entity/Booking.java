@@ -6,6 +6,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "bookings")
 public class Booking {
+    //atributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -18,14 +19,6 @@ public class Booking {
     private String email;
     @Column(name="id_hotel")
     private Integer id_hotel;
-
-    public Integer getId_hotel() {
-        return id_hotel;
-    }
-
-    public void setId_hotel(Integer id_hotel) {
-        this.id_hotel = id_hotel;
-    }
 
     //Relationships
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -72,5 +65,11 @@ public class Booking {
     }
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+    public Integer getId_hotel() {
+        return id_hotel;
+    }
+    public void setId_hotel(Integer id_hotel) {
+        this.id_hotel = id_hotel;
     }
 }
