@@ -32,8 +32,6 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public Booking createBooking(Booking booking) {
-        Hotel hotel = hotelRepository.findById(booking.getHotel().getId()).
-                orElseThrow(() -> new EntityNotFoundException("Hotel not found with id: " + booking.getHotel().getId()));
         for (LocalDate date = booking.getDate_from(); date.isBefore(booking.getDate_to().plusDays(1)); date = date.plusDays(1)) {
             Optional<Availability> existingAvailability = availabilityRepository.findByHotelAndDate(booking.getId_hotel(), date);
             if (existingAvailability.isPresent()) {

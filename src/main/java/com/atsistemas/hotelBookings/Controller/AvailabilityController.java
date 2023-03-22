@@ -31,15 +31,19 @@ public class AvailabilityController {
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             @RequestParam Integer rooms) {
-        try {
-            availabilityServiceImpl.createAvailability(hotelId, startDate, endDate, rooms);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (EntityNotFoundException ex) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        availabilityServiceImpl.createAvailability(hotelId, startDate, endDate, rooms);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Void> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return ResponseEntity.notFound().build();
+    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Void> handleException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
 
 
 }

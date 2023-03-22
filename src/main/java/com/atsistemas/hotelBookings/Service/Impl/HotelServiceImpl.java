@@ -1,7 +1,6 @@
 package com.atsistemas.hotelBookings.Service.Impl;
 
 import com.atsistemas.hotelBookings.Entity.Hotel;
-import com.atsistemas.hotelBookings.Repository.AvailabilityRepository;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.atsistemas.hotelBookings.Service.HotelService;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 public class HotelServiceImpl implements HotelService {
 
     private HotelRepository hotelRepository;
-
     public HotelServiceImpl(HotelRepository hotelRepository) {
         this.hotelRepository = hotelRepository;
     }
@@ -67,7 +65,6 @@ public class HotelServiceImpl implements HotelService {
         }
         return hotelRepository.findAll(spec);
     }
-
     //Filtro para obtener categoria de Hotel de manera opcional.
     public Specification<Hotel> categoryFilter(Integer category){
         Specification<Hotel> categorySpec = (Root<Hotel> root, CriteriaQuery<?> query,
@@ -80,5 +77,4 @@ public class HotelServiceImpl implements HotelService {
                                          CriteriaBuilder criteriaBuilder) -> criteriaBuilder.equal(root.get("name"),name);
         return nameSpec;
     }
-
 }
