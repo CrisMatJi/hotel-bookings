@@ -13,18 +13,13 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/availabilities")
 public class AvailabilityController {
-
-
+    //Inyección de Beans por constructor.
     private AvailabilityServiceImpl availabilityServiceImpl;
-
-
-
     AvailabilityController(AvailabilityServiceImpl availabilityService) {
         this.availabilityServiceImpl = availabilityService;
     }
 
     //Insertamos disponibilidad segun fecha de entrada y salida . Tenemos control de excepciones y no tratamos en este caso con DTO
-
     @PostMapping("/{hotelId}")
     public ResponseEntity<Void> createAvailability(
             @PathVariable Integer hotelId,
@@ -34,7 +29,6 @@ public class AvailabilityController {
         availabilityServiceImpl.createAvailability(hotelId, startDate, endDate, rooms);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Void> handleEntityNotFoundException(EntityNotFoundException ex) {
         return ResponseEntity.notFound().build();
@@ -43,7 +37,4 @@ public class AvailabilityController {
     public ResponseEntity<Void> handleException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
-
-
-
 }

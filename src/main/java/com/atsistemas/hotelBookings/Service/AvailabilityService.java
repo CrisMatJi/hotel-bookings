@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface AvailabilityService {
     void createAvailability(Integer hotelId, LocalDate startDate, LocalDate endDate, Integer rooms);
+    Optional<Availability> getAvailability(Integer hotelId, LocalDate date);
+    void saveAvailability(Availability availability);
 }

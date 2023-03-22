@@ -16,7 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/hotels")
 public class HotelController {
-
+    //Inyección de Beans por constructor.
     private HotelServiceImpl hotelService;
     private HotelMapperImpl hotelMapper;
     public HotelController(HotelServiceImpl hotelService, HotelMapperImpl hotelMapper){
@@ -85,8 +85,6 @@ public class HotelController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
     @GetMapping(value="/availabilities", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HotelDTO>> consultAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
                                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
@@ -104,18 +102,4 @@ public class HotelController {
         }
 
     }
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-

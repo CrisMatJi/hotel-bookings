@@ -3,8 +3,11 @@ package com.atsistemas.hotelBookings.Service.Impl;
 import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.atsistemas.hotelBookings.Service.HotelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.Access;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -18,17 +21,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class HotelServiceImpl implements HotelService {
-
+    //Inyección de Beans por anotación de Spring
+    @Autowired
     private HotelRepository hotelRepository;
-    public HotelServiceImpl(HotelRepository hotelRepository) {
-        this.hotelRepository = hotelRepository;
-    }
     //Obtener Listado completo de hoteles.
     @Override
     public List<Hotel> getAllHotels() {
         return hotelRepository.findAll().stream().sorted(Comparator.comparing(Hotel::getId)).collect(Collectors.toList());
     }
-    //Obtener Hotel por ID
+    //Obtener Hotel por IDen
     @Override
     public Optional<Hotel> getHotelById(Integer id) {
         return hotelRepository.findById(id);

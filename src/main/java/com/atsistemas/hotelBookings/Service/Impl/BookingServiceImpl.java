@@ -6,6 +6,7 @@ import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Repository.AvailabilityRepository;
 import com.atsistemas.hotelBookings.Repository.BookingRepository;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
+import com.atsistemas.hotelBookings.Service.AvailabilityService;
 import com.atsistemas.hotelBookings.Service.BookingService;
 import com.atsistemas.hotelBookings.Service.HotelService;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,9 @@ import java.util.Optional;
 public class BookingServiceImpl implements BookingService {
     //Inyección de beans por constructor.
     private BookingRepository bookingRepository;
-    private AvailabilityServiceImpl availabilityService;
-    private HotelServiceImpl hotelService;
-    BookingServiceImpl(BookingRepository bookingRepository, HotelServiceImpl hotelService, AvailabilityServiceImpl availabilityService) {
+    private AvailabilityService availabilityService;
+    private HotelService hotelService;
+    BookingServiceImpl(BookingRepository bookingRepository, HotelService hotelService, AvailabilityService availabilityService) {
         this.bookingRepository = bookingRepository;
         this.availabilityService = availabilityService;
         this.hotelService = hotelService;
