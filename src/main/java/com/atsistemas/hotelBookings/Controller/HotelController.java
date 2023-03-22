@@ -8,15 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/hotels")
 public class HotelController {
-    //Inyección de Beans por constructor.
+    /**
+     * Inyección de Beans por constructor.
+     */
+
     private HotelServiceImpl hotelService;
     private HotelMapperImpl hotelMapper;
     public HotelController(HotelServiceImpl hotelService, HotelMapperImpl hotelMapper){
@@ -24,67 +26,68 @@ public class HotelController {
         this.hotelMapper = hotelMapper;
     }
 
-    //Consultamos el listado de hoteles y los devolvemos odernados por ID
+    /**
+     * Consultamos el listado de hoteles y los devolvemos odernados por ID
+     * @return ResponseEntity<List<HotelDTO>
+     */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HotelDTO>> getAllHotels() {
-        try {
-
             List<Hotel> hotels = hotelService.getAllHotels();
-            if (hotels == null || hotels.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
             List<HotelDTO> hotelDTOs = hotelMapper.listToDTO(hotels);
             return ResponseEntity.ok(hotelDTOs);
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
     }
-    //Consultamos un Hotel , según su ID
+
+    /**
+     * Consultamos un Hotel , según su ID
+     * @param id
+     * @return ResponseEntity<HotelDTO>
+     */
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HotelDTO> getHotelById(@PathVariable(value = "id") Integer id) {
-        try {
-            Optional<Hotel> optionalHotel = hotelService.getHotelById(id);
-            if (optionalHotel.isPresent()) {
-                Hotel hotel = optionalHotel.get();
-                HotelDTO hotelDTO = hotelMapper.toDTO(hotel);
-                return ResponseEntity.ok(hotelDTO);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+            Hotel hotel= hotelService.getHotelById(id);
+            HotelDTO hotelDTO = hotelMapper.toDTO(hotel);
+            return ResponseEntity.ok(hotelDTO);
     }
-    //Creamos un Hotel, sólo sin ID.
+
+
+    /**
+     * Creamos un Hotel, sólo sin ID.
+     * @param hotelDTO
+     * @return ResponseEntity<HotelDTO>
+     */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HotelDTO> createHotel(@RequestBody HotelDTO hotelDTO) {
-        try {
             Hotel hotel = hotelMapper.toEntity(hotelDTO);
-            Hotel createdHotel = hotelService.createHotel(hotel);
+            Hotel createdHotel = hotelService.saveHotel(hotel);
             HotelDTO createdHotelDTO = hotelMapper.toDTO(createdHotel);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdHotelDTO);
-        } catch (Exception e) {
-            // Manejo de excepciones
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
-    //Actualizamos Hotel y nos aseguramos que nos envíe un ID.
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+
+
+    /**
+     * Actualizamos Hotel y nos aseguramos que nos envíe un ID.
+      * @param hotelDTO
+     * @return ResponseEntity<HotelDTO>
+     */
+    @PutMapping
     public ResponseEntity<HotelDTO> updateHotel(@RequestBody HotelDTO hotelDTO) {
-        try {
-            Hotel hotel = hotelMapper.toEntity(hotelDTO);
-            if (hotelService.getHotelById(hotel.getId()).isEmpty()) {
-                throw new IllegalArgumentException("Para crear un nuevo Hotel , use método POST");
-            }
-            Hotel createdHotel = hotelService.createHotel(hotel);
-            HotelDTO createdHotelDTO = hotelMapper.toDTO(createdHotel);
+
+            //Crear método update y meter nombre y categoria.
+            Hotel hotel = hotelService.getHotelById(hotelDTO.getId());
+            hotel.setName(hotelDTO.getName());
+            hotel.setCategory(hotelDTO.getCategory());
+            HotelDTO createdHotelDTO = hotelMapper.toDTO(hotelService.saveHotel(hotel));
             return ResponseEntity.status(HttpStatus.CREATED).body(createdHotelDTO);
-        } catch (Exception e) {
-            // Manejo de excepciones
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
     }
+
+    /**
+     * Consultamos disponibilidad según rango de fechas(obligatorias) , nombre y categoría de hotel (opcionales)
+     * @param startDate
+     * @param endDate
+     * @param name
+     * @param category
+     * @return List<HotelDTO>
+     */
     @GetMapping(value="/availabilities", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HotelDTO>> consultAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
                                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,

@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,13 +16,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/bookings")
 public class BookingController {
-    //Inyección de Beans
+    /**
+     * Inyección de Beans por constructor
+     */
     private BookingServiceImpl bookingService;
     private BookingMapperImpl bookingMapper;
+
     BookingController(BookingServiceImpl bookingService, BookingMapperImpl bookingMapper) {
         this.bookingService = bookingService;
         this.bookingMapper = bookingMapper;
     }
+
     // Reserva de habitación: Dado un hotel, unas fechas de entrada y salida y un email, se creará una reserva.
     @PostMapping(value = "/{hotelId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookingDTO> createBooking(@PathVariable Integer hotelId,
@@ -38,6 +41,7 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     //Consultar las reservas de un hotel en una fecha determinada
     @GetMapping("/{id}")
     public ResponseEntity<List<BookingDTO>> getBookingsByHotelAndDates(
@@ -53,6 +57,7 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     //Consultar reserva por ID y el hotel asociado
     @GetMapping("/search/{id}")
     public ResponseEntity<BookingDTO> getBookingWithHotel(
@@ -66,6 +71,7 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
     //Eliminar una reserva, controlamos si existe el ID dentro del método y restamos las habitaciones para esas fechas.
     @DeleteMapping(value = "/delete/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
