@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "hotels")
 public class Hotel {
-    //Atributes
+    //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

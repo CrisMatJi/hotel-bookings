@@ -7,6 +7,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name="availabilities")
 public class Availability {
+
+    //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -15,6 +17,8 @@ public class Availability {
     LocalDate date;
     @Column(name ="rooms")
     Integer rooms;
+    @Column(name = "id_hotel")
+    Integer id_hotel;
 
     //Relationships
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -55,5 +59,11 @@ public class Availability {
     }
     public void setRooms(Integer rooms) {
         this.rooms = rooms;
+    }
+    public Integer getId_hotel() {
+        return id_hotel;
+    }
+    public void setId_hotel(Integer id_hotel) {
+        this.id_hotel = id_hotel;
     }
 }

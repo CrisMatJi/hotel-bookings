@@ -2,11 +2,11 @@ package com.atsistemas.hotelBookings.Exception;
 
 import org.springframework.http.HttpStatus;
 
-public class SaveErrorException extends CustomException{
-    private  String MSG = "Unable to perform data storage or update operation.";
-    private final HttpStatus code = HttpStatus.INTERNAL_SERVER_ERROR;
-
-    public SaveErrorException() {
+public class ErrorQueryException extends CustomException {
+    private  String MSG = "Error with query ";
+    private final HttpStatus code = HttpStatus.NO_CONTENT;
+    private Integer idHotel;
+    public ErrorQueryException() {
         super();
     }
     public String getMessageError(){
@@ -15,5 +15,6 @@ public class SaveErrorException extends CustomException{
     public HttpStatus getErrorCode(){
         return code;
     }
+
 
 }

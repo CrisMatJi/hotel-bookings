@@ -40,7 +40,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
         }
     }
     public Optional<Availability> getAvailability(Integer hotelId, LocalDate date){
-        return availabilityRepository.findByHotel_IdAndDate(hotelId, date);
+        return availabilityRepository.findByHotelAndDate(hotelId, date);
     }
     public void saveAvailability(Availability availability){
         availabilityRepository.save(availability);

@@ -71,12 +71,8 @@ public class HotelController {
      */
     @PutMapping
     public ResponseEntity<HotelDTO> updateHotel(@RequestBody HotelDTO hotelDTO) {
-
-            //Crear método update y meter nombre y categoria.
             Hotel hotel = hotelService.getHotelById(hotelDTO.getId());
-            hotel.setName(hotelDTO.getName());
-            hotel.setCategory(hotelDTO.getCategory());
-            HotelDTO createdHotelDTO = hotelMapper.toDTO(hotelService.saveHotel(hotel));
+            HotelDTO createdHotelDTO = hotelMapper.toDTO(hotelService.updateHotel(hotel, hotelDTO.getCategory(), hotelDTO.getName()));
             return ResponseEntity.status(HttpStatus.CREATED).body(createdHotelDTO);
     }
 

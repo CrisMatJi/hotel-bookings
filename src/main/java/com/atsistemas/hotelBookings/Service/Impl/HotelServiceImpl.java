@@ -73,6 +73,24 @@ public class HotelServiceImpl implements HotelService {
     }
 
     /**
+     * Actualizar un Hotel
+     * @param hotel
+     * @return
+     * @throws SaveErrorException
+     */
+    @Override
+    @Transactional
+    public Hotel updateHotel(Hotel hotel,Integer category,String name) throws SaveErrorException {
+        try {
+            hotel.setName(name);
+            hotel.setCategory(category);
+            return hotelRepository.save(hotel);
+        } catch (Exception e) {
+            throw new SaveErrorException();
+        }
+    }
+
+    /**
      * Consultar disponibilidad. Hacemos la consulta obligatoria con @Query y el resto con criteriabuilder.
      *
      * @param startDate

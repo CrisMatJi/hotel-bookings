@@ -11,6 +11,7 @@ public interface HotelService {
     List<Hotel> getAllHotels();
     Hotel getHotelById(Integer id);
     Hotel saveHotel(Hotel hotel);
+    Hotel updateHotel(Hotel hotel,Integer category, String name);
     List<Hotel> findByAvailability(LocalDate startDate, LocalDate endDate, String name, Integer category);
 
 }

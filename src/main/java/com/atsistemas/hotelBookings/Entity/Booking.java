@@ -6,7 +6,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "bookings")
 public class Booking {
-    //atributes
+    //attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -17,9 +17,11 @@ public class Booking {
     private LocalDate date_to;
     @Column(name = "email")
     private String email;
+    @Column(name = "id_hotel")
+    private Integer id_hotel;
 
     //Relationships
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_hotel", nullable = false, insertable = false, updatable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Hotel hotel;
@@ -27,10 +29,11 @@ public class Booking {
     //Constructors
     public Booking() {
     }
-    public Booking( LocalDate date_from, LocalDate date_to, String email) {
+    public Booking( LocalDate date_from, LocalDate date_to, String email, Integer id_hotel ) {
         this.date_from = date_from;
         this.date_to = date_to;
         this.email = email;
+        this.id_hotel = id_hotel;
     }
 
     //Getters and setters
@@ -64,4 +67,12 @@ public class Booking {
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
-   }
+
+    public Integer getId_hotel() {
+        return id_hotel;
+    }
+
+    public void setId_hotel(Integer id_hotel) {
+        this.id_hotel = id_hotel;
+    }
+}
