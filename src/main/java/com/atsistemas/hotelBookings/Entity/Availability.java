@@ -15,8 +15,6 @@ public class Availability {
     LocalDate date;
     @Column(name ="rooms")
     Integer rooms;
-    @Column(name = "id_hotel")
-    Integer id_hotel;
 
     //Relationships
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -30,11 +28,6 @@ public class Availability {
     public Availability( LocalDate date, Hotel hotel, Integer rooms) {
         this.date = date;
         this.hotel = hotel;
-        this.rooms = rooms;
-    }
-    public Availability( LocalDate date, Integer id_hotel, Integer rooms) {
-        this.date = date;
-        this.id_hotel = id_hotel;
         this.rooms = rooms;
     }
 
