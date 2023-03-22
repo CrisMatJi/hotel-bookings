@@ -68,7 +68,7 @@ public class BookingController {
             return ResponseEntity.ok().body(booking);
         } catch (Exception e) {
             // Manejo de excepciones
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 

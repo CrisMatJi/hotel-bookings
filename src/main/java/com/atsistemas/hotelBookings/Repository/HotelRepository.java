@@ -13,14 +13,13 @@ import java.util.Optional;
 
 
 public interface HotelRepository extends JpaRepository<Hotel,Integer>, JpaSpecificationExecutor<Hotel> {
-    @Query("SELECT h FROM Hotel h JOIN h.availabilities a WHERE a.date BETWEEN :startDate AND :endDate AND a.rooms>0")
-    Optional<List<Hotel>>findHotelsByAvailability(@Param("startDate") LocalDate startDate ,@Param("endDate") LocalDate endDate);
+
     @Query("SELECT h FROM Hotel h WHERE h.id IN (" +
             "SELECT a.hotel.id FROM Availability a " +
             "WHERE a.date BETWEEN :startDate AND :endDate AND a.rooms > 0 " +
             "GROUP BY a.hotel.id " +
             "HAVING COUNT(*) = :days)")
-    Optional<List<Hotel>>findHotelsByAvailability2(@Param("startDate") LocalDate startDate ,@Param("endDate") LocalDate endDate,@Param("days") Long days);
+    Optional<List<Hotel>>findHotelsByAvailability(@Param("startDate") LocalDate startDate ,@Param("endDate") LocalDate endDate,@Param("days") Long days);
 
 
 

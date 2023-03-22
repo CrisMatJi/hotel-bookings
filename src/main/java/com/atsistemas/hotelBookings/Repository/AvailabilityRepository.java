@@ -10,8 +10,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface AvailabilityRepository extends JpaRepository<Availability,Integer>, JpaSpecificationExecutor<Availability> {
-    //Realizamos una búsqueda de disponibilidad según hote y fecha.
-    @Query("SELECT a FROM Availability a WHERE a.hotel = :hotel AND a.date = :date")
-    Optional<Availability> findByHotelAndDate(@Param("hotel") Hotel hotel, @Param("date") LocalDate date);
+    //Realizamos una búsqueda de disponibilidad según hotel y fecha.
+    @Query("SELECT a FROM Availability a WHERE a.id_hotel = :id_hotel AND a.date = :date")
+    Optional<Availability>  findByHotelAndDate(@Param("id_hotel") Integer id_hotel, @Param("date") LocalDate date);
 
 }
