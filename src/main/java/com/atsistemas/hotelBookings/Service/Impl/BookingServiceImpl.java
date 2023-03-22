@@ -7,6 +7,7 @@ import com.atsistemas.hotelBookings.Repository.AvailabilityRepository;
 import com.atsistemas.hotelBookings.Repository.BookingRepository;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.atsistemas.hotelBookings.Service.BookingService;
+import com.atsistemas.hotelBookings.Service.HotelService;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -19,25 +20,25 @@ import java.util.Optional;
 public class BookingServiceImpl implements BookingService {
     //Inyección de beans por constructor.
     private BookingRepository bookingRepository;
-    private AvailabilityRepository availabilityRepository;
-    private HotelRepository hotelRepository;
-    BookingServiceImpl(BookingRepository bookingRepository, AvailabilityRepository availabilityRepository, HotelRepository hotelRepository) {
+    private AvailabilityServiceImpl availabilityService;
+    private HotelServiceImpl hotelService;
+    BookingServiceImpl(BookingRepository bookingRepository, HotelServiceImpl hotelService, AvailabilityServiceImpl availabilityService) {
         this.bookingRepository = bookingRepository;
-        this.availabilityRepository = availabilityRepository;
-        this.hotelRepository = hotelRepository;
+        this.availabilityService = availabilityService;
+        this.hotelService = hotelService;
     }
     //Método para crear reserva.
     @Override
     @Transactional
     public Booking createBooking(Booking booking, Integer hotelId) {
-        Hotel hotel = hotelRepository.findById(hotelId)
+        Hotel hotel = hotelService.getHotelById(hotelId)
                 .orElseThrow(() -> new NoSuchElementException("No se encontró ningún hotel con el ID " + hotelId));
         for (LocalDate date = booking.getDate_from(); date.isBefore(booking.getDate_to().plusDays(1)); date = date.plusDays(1)) {
-            Optional<Availability> existingAvailability = availabilityRepository.findByHotelAndDate(hotelId, date);
+            Optional<Availability> existingAvailability = availabilityService.getAvailability(hotelId, date);
             if (existingAvailability.isPresent()) {
                 Availability availability = existingAvailability.get();
                 availability.setRooms(availability.getRooms() - 1);
-                availabilityRepository.save(availability);
+                availabilityService.saveAvailability(availability);
             }
         }
         return bookingRepository.save(booking);
@@ -62,11 +63,11 @@ public class BookingServiceImpl implements BookingService {
         if (optionalBooking.isPresent()) {
             Booking booking = optionalBooking.get();
             for (LocalDate date = booking.getDate_from(); date.isBefore(booking.getDate_to().plusDays(1)); date = date.plusDays(1)) {
-                Optional<Availability> existingAvailability = availabilityRepository.findByHotelAndDate(booking.getHotel().getId(), date);
+                Optional<Availability> existingAvailability = availabilityService.getAvailability(booking.getHotel().getId(), date);
                 if (existingAvailability.isPresent()) {
                     Availability availability = existingAvailability.get();
                     availability.setRooms(availability.getRooms() + 1);
-                    availabilityRepository.save(availability);
+                    availabilityService.saveAvailability(availability);
                 }
             }
         }
