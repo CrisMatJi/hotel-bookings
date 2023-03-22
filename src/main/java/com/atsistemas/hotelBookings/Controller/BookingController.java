@@ -28,11 +28,12 @@ public class BookingController {
     }
 
     // Reserva de habitación: Dado un hotel, unas fechas de entrada y salida y un email, se creará una reserva.
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BookingDTO> createBooking(@RequestBody BookingDTO bookingDTO) {
+    @PostMapping(value = "/{hotelId}" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BookingDTO> createBooking(@PathVariable Integer hotelId,
+                                                    @RequestBody BookingDTO bookingDTO) {
         try {
             Booking booking = bookingMapper.toEntity(bookingDTO);
-            Booking createdBooking = bookingService.createBooking(booking);
+            Booking createdBooking = bookingService.createBooking(booking, hotelId);
             BookingDTO createdBookingDTO = bookingMapper.toDTO(createdBooking);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdBookingDTO);
         } catch (Exception e) {

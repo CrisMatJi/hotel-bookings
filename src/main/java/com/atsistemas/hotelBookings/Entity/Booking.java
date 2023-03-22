@@ -17,8 +17,6 @@ public class Booking {
     private LocalDate date_to;
     @Column(name = "email")
     private String email;
-    @Column(name="id_hotel")
-    private Integer id_hotel;
 
     //Relationships
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -66,10 +64,4 @@ public class Booking {
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
-    public Integer getId_hotel() {
-        return id_hotel;
-    }
-    public void setId_hotel(Integer id_hotel) {
-        this.id_hotel = id_hotel;
-    }
-}
+   }

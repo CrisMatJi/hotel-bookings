@@ -8,13 +8,11 @@ import com.atsistemas.hotelBookings.Repository.BookingRepository;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.atsistemas.hotelBookings.Service.BookingService;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -31,9 +29,11 @@ public class BookingServiceImpl implements BookingService {
     //Método para crear reserva.
     @Override
     @Transactional
-    public Booking createBooking(Booking booking) {
+    public Booking createBooking(Booking booking, Integer hotelId) {
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new NoSuchElementException("No se encontró ningún hotel con el ID " + hotelId));
         for (LocalDate date = booking.getDate_from(); date.isBefore(booking.getDate_to().plusDays(1)); date = date.plusDays(1)) {
-            Optional<Availability> existingAvailability = availabilityRepository.findByHotelAndDate(booking.getId_hotel(), date);
+            Optional<Availability> existingAvailability = availabilityRepository.findByHotelAndDate(hotelId, date);
             if (existingAvailability.isPresent()) {
                 Availability availability = existingAvailability.get();
                 availability.setRooms(availability.getRooms() - 1);
@@ -62,7 +62,7 @@ public class BookingServiceImpl implements BookingService {
         if (optionalBooking.isPresent()) {
             Booking booking = optionalBooking.get();
             for (LocalDate date = booking.getDate_from(); date.isBefore(booking.getDate_to().plusDays(1)); date = date.plusDays(1)) {
-                Optional<Availability> existingAvailability = availabilityRepository.findByHotelAndDate(booking.getId_hotel(), date);
+                Optional<Availability> existingAvailability = availabilityRepository.findByHotelAndDate(booking.getHotel().getId(), date);
                 if (existingAvailability.isPresent()) {
                     Availability availability = existingAvailability.get();
                     availability.setRooms(availability.getRooms() + 1);
