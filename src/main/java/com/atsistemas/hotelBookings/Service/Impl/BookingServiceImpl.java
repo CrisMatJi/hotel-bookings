@@ -47,7 +47,7 @@ public class BookingServiceImpl implements BookingService {
             Hotel hotel = hotelService.getHotelById(hotelId);
             for (LocalDate date = booking.getDate_from(); date.isBefore(booking.getDate_to().plusDays(1)); date = date.plusDays(1)) {
                 Optional<Availability> existingAvailability = availabilityService.getAvailability(hotelId, date);
-                if (existingAvailability.isPresent()) {
+                if (existingAvailability != null && existingAvailability.isPresent()) {
                     Availability availability = existingAvailability.get();
                     availability.setRooms(availability.getRooms() - 1);
                     availabilityService.saveAvailability(availability);

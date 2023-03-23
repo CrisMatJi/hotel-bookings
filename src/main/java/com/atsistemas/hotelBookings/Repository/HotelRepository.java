@@ -20,12 +20,4 @@ public interface HotelRepository extends JpaRepository<Hotel,Integer>, JpaSpecif
             "GROUP BY a.hotel.id " +
             "HAVING COUNT(*) = :days)")
     Optional<List<Hotel>>findHotelsByAvailability(@Param("startDate") LocalDate startDate ,@Param("endDate") LocalDate endDate,@Param("days") Long days);
-
-
-
-
-
-
-
-
 }
