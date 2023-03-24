@@ -17,7 +17,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
      */
 
     AvailabilityRepository availabilityRepository;
-    HotelService hotelService;
+    HotelServiceImpl hotelService;
     AvailabilityServiceImpl(AvailabilityRepository availabilityRepository, HotelServiceImpl hotelService) {
         this.availabilityRepository = availabilityRepository;
         this.hotelService = hotelService;

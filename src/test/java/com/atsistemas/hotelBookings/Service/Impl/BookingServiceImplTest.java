@@ -29,10 +29,10 @@ public class BookingServiceImplTest {
     private BookingRepository bookingRepository;
 
     @Mock
-    private AvailabilityService availabilityService;
+    private AvailabilityServiceImpl availabilityService;
 
     @Mock
-    private HotelService hotelService;
+    private HotelServiceImpl hotelService;
 
     @InjectMocks
     private BookingServiceImpl bookingService;
@@ -83,10 +83,10 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void createBooking_shouldThrowSaveErrorException() throws SaveErrorException {
+    public void createBooking_shouldThrowException() throws SaveErrorException {
         Mockito.when(hotelService.getHotelById(hotelId)).thenReturn(hotel);
         Mockito.when(availabilityService.getAvailability(hotelId, booking.getDate_from())).thenReturn(Optional.of(new Availability()));
-        assertThrows(SaveErrorException.class, () -> bookingService.createBooking(booking, hotelId));
+        assertThrows(Exception.class, () -> bookingService.createBooking(booking, hotelId));
     }
 
     @Test

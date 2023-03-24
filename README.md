@@ -26,7 +26,7 @@ Para poner en funcionamiento la base de datos, se deben seguir los siguientes pa
 La API rest HotelBookings puede ser utilizada de dos formas:
 * 1. Acceder a la [web de documentación](https://localhost:8080/hotelbookings) y ejecutar todos los comandos de la API.
 * 2. Utilizar cualquier herramienta que permita hacer pruebas con APIs, como POSTMAN
-* A continuación, se muestra una captura con todos los métodos documentados en nuestra web y cómo utilizarlos.  
+* A continuación, se muestra una captura con todos los métodos documentados en nuestra web y cómo utilizarlos.
 
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://i.imgur.com/wWNv41t.png)
 
@@ -51,7 +51,7 @@ A continuación, se presentan algunas de las pruebas realizadas utilizando todos
 
 - GET – [http://localhost:8080/bookings/search/{id} ](http://localhost:8080/bookings/search/{id} ) – Consulta reserva por id , devolvemos reserva y el hotel asociado.
 
-- DELETE – [http://localhost:8080/bookings/delete/{id} ](http://localhost:8080/bookings/delete/{id} ) Borra la reserva según el ID facilitado.  
+- DELETE – [http://localhost:8080/bookings/delete/{id} ](http://localhost:8080/bookings/delete/{id} ) Borra la reserva según el ID facilitado.
 
 - POST – [http://localhost:8080/availabilities/{hotelid} ](http://localhost:8080/availabilities/{hotelid} )
 
