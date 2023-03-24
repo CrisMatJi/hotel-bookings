@@ -41,7 +41,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
                 availability = existingAvailability.get();
                 availability.setRooms(availability.getRooms() + rooms);
             } else {
-                availability = new Availability(date,hotel,rooms);
+                availability = new Availability(date,hotel,rooms,hotelId);
             }
             try {
                 availabilityRepository.save(availability);

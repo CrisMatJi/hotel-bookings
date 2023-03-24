@@ -2,6 +2,7 @@ package com.atsistemas.hotelBookings.Entity;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
@@ -9,14 +10,18 @@ import java.time.LocalDate;
 public class Availability {
 
     //Attributes
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Integer id;
+
     @Column(name = "date")
     LocalDate date;
+
     @Column(name ="rooms")
     Integer rooms;
+
     @Column(name = "id_hotel")
     Integer id_hotel;
 
@@ -33,6 +38,12 @@ public class Availability {
         this.date = date;
         this.hotel = hotel;
         this.rooms = rooms;
+    }
+    public Availability( LocalDate date, Hotel hotel, Integer rooms, Integer id_hotel) {
+        this.date = date;
+        this.hotel = hotel;
+        this.rooms = rooms;
+        this.id_hotel = id_hotel;
     }
 
     //Gettters and Setters

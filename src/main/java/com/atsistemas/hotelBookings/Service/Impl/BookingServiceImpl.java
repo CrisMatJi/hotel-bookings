@@ -3,7 +3,9 @@ package com.atsistemas.hotelBookings.Service.Impl;
 import com.atsistemas.hotelBookings.Entity.Availability;
 import com.atsistemas.hotelBookings.Entity.Booking;
 import com.atsistemas.hotelBookings.Entity.Hotel;
+import com.atsistemas.hotelBookings.Exception.AvailabilityErrorException;
 import com.atsistemas.hotelBookings.Exception.ErrorQueryException;
+import com.atsistemas.hotelBookings.Exception.HotelNotFoundException;
 import com.atsistemas.hotelBookings.Exception.SaveErrorException;
 import com.atsistemas.hotelBookings.Repository.BookingRepository;
 import com.atsistemas.hotelBookings.Service.AvailabilityService;
@@ -42,23 +44,23 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     @Transactional
-    public Booking createBooking(Booking booking, Integer hotelId) throws SaveErrorException {
-        try {
-            Hotel hotel = hotelService.getHotelById(hotelId);
-            for (LocalDate date = booking.getDate_from(); date.isBefore(booking.getDate_to().plusDays(1)); date = date.plusDays(1)) {
-                Optional<Availability> existingAvailability = availabilityService.getAvailability(hotelId, date);
-                if (existingAvailability != null && existingAvailability.isPresent()) {
-                    Availability availability = existingAvailability.get();
-                    availability.setRooms(availability.getRooms() - 1);
-                    availabilityService.saveAvailability(availability);
-                }
+    public Booking createBooking(Booking booking, Integer hotelId) throws SaveErrorException, AvailabilityErrorException {
+        Hotel hotel = hotelService.getHotelById(hotelId);
+        boolean guardar = false;
+        for (LocalDate date = booking.getDate_from(); date.isBefore(booking.getDate_to().plusDays(1)); date = date.plusDays(1)) {
+            Optional<Availability> existingAvailability = availabilityService.getAvailability(hotelId, date);
+            if (existingAvailability != null && existingAvailability.isPresent()) {
+                Availability availability = existingAvailability.get();
+                availability.setRooms(availability.getRooms() - 1);
+                availabilityService.saveAvailability(availability);
+                guardar = true;
             }
+        }
+        if (guardar == true) {
             booking.setHotel(hotel);
             booking.setId_hotel(hotelId);
             return bookingRepository.save(booking);
-        } catch (Exception e) {
-            throw new SaveErrorException();
-        }
+        } else throw new AvailabilityErrorException();
     }
 
     /**

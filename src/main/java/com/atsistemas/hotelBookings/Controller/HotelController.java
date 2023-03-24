@@ -3,6 +3,7 @@ import com.atsistemas.hotelBookings.Dto.HotelDTO;
 import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Mapper.Impl.HotelMapperImpl;
 import com.atsistemas.hotelBookings.Service.Impl.HotelServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +31,7 @@ public class HotelController {
      * Consultamos el listado de hoteles y los devolvemos odernados por ID
      * @return ResponseEntity<List<HotelDTO>
      */
+    @Operation(summary = "Consultar el listado completo de hoteles, ordenados por ID")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HotelDTO>> getAllHotels() {
             List<Hotel> hotels = hotelService.getAllHotels();
@@ -42,6 +44,7 @@ public class HotelController {
      * @param id
      * @return ResponseEntity<HotelDTO>
      */
+    @Operation(summary = "Consultar hotel según ID")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HotelDTO> getHotelById(@PathVariable(value = "id") Integer id) {
             Hotel hotel= hotelService.getHotelById(id);
@@ -55,6 +58,7 @@ public class HotelController {
      * @param hotelDTO
      * @return ResponseEntity<HotelDTO>
      */
+    @Operation(summary = "Crear hotel")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HotelDTO> createHotel(@RequestBody HotelDTO hotelDTO) {
             Hotel hotel = hotelMapper.toEntity(hotelDTO);
@@ -69,6 +73,7 @@ public class HotelController {
       * @param hotelDTO
      * @return ResponseEntity<HotelDTO>
      */
+    @Operation(summary = "Actualizar hotel , adjuntar datos en el cuerpo(JSON)")
     @PutMapping
     public ResponseEntity<HotelDTO> updateHotel(@RequestBody HotelDTO hotelDTO) {
             Hotel hotel = hotelService.getHotelById(hotelDTO.getId());
@@ -84,6 +89,7 @@ public class HotelController {
      * @param category
      * @return List<HotelDTO>
      */
+    @Operation(summary = "Consultar disponibilidad de los hoteles según rango de fechas, opcionalmente se le puede agregar nombre y categoría de hotel para filtrar el resultado")
     @GetMapping(value="/availabilities", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HotelDTO>> consultAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
                                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,

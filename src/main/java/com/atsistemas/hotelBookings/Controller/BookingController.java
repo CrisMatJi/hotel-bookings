@@ -52,9 +52,9 @@ public class BookingController {
      * @return ResponseEntity<List<BookingDTO>>
      */
     @Operation(summary = "Consultar las reservas de un hotel en una fecha determinada")
-    @GetMapping("/{id}")
+    @GetMapping("/{hotelId}")
     public ResponseEntity<List<BookingDTO>> getBookingsByHotelAndDates(
-            @PathVariable(value = "id") Integer hotelId,
+            @PathVariable(value = "hotelId") Integer hotelId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
@@ -68,6 +68,7 @@ public class BookingController {
      * @param bookingId
      * @return ResponseEntity<BookingDTO>
      */
+    @Operation(summary = "Consultar reserva por ID y el hotel asociado")
     @GetMapping("/search/{id}")
     public ResponseEntity<BookingDTO> getBookingWithHotel(
             @PathVariable(value = "id") Integer bookingId) {
@@ -80,6 +81,7 @@ public class BookingController {
      * Eliminar una reserva, controlamos si existe el ID dentro del método y restamos las habitaciones para esas fechas.
      * @param bookingId
      */
+    @Operation(summary = "Eliminar una reserva según ID de reserva")
     @DeleteMapping(value = "/delete/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void bookingDelete(@PathVariable("id") Integer bookingId) {
