@@ -17,6 +17,14 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.15</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -59,7 +67,13 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
-	<!-- End Jackson Library -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.13.0</version>
+		</dependency>
+
+		<!-- End Jackson Library -->
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -70,7 +84,23 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-    </dependencies>
+	<!-- H2 test DB -->
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.1.214</version>
+			<scope>test</scope>
+		</dependency>
+<!-- End H2 Library -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>5.3.3</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
 
 
 

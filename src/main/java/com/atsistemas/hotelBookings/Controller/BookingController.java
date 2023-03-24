@@ -4,6 +4,7 @@ import com.atsistemas.hotelBookings.Dto.BookingDTO;
 import com.atsistemas.hotelBookings.Entity.Booking;
 import com.atsistemas.hotelBookings.Mapper.Impl.BookingMapperImpl;
 import com.atsistemas.hotelBookings.Service.Impl.BookingServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,6 +34,7 @@ public class BookingController {
      * @param bookingDTO
      * @return ResponseEntity<BookingDTO>
      */
+    @Operation(summary = "Dado un hotel, unas fechas de entrada y salida y un email, se creará una reserva. ")
     @PostMapping(value = "/{hotelId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookingDTO> createBooking(@PathVariable Integer hotelId,
                                                     @RequestBody BookingDTO bookingDTO) {
@@ -49,6 +51,7 @@ public class BookingController {
      * @param endDate
      * @return ResponseEntity<List<BookingDTO>>
      */
+    @Operation(summary = "Consultar las reservas de un hotel en una fecha determinada")
     @GetMapping("/{id}")
     public ResponseEntity<List<BookingDTO>> getBookingsByHotelAndDates(
             @PathVariable(value = "id") Integer hotelId,
@@ -57,7 +60,7 @@ public class BookingController {
 
         List<Booking> bookings = this.bookingService.getBookingsByHotelAndDates(hotelId, startDate, endDate);
         List<BookingDTO> bookingDTOs = this.bookingMapper.listToDTO(bookings);
-        return ResponseEntity.ok().body(bookingDTOs);
+            return ResponseEntity.ok().body(bookingDTOs);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.atsistemas.hotelBookings.Dto;
 
+import com.atsistemas.hotelBookings.Entity.Booking;
 import com.atsistemas.hotelBookings.Entity.Hotel;
 
 import java.time.LocalDate;
@@ -11,6 +12,8 @@ public class BookingDTO {
     private LocalDate date_to;
     private String email;
     private Hotel hotel;
+
+
 
     public Hotel getHotel() {
         return hotel;
@@ -30,6 +33,13 @@ public class BookingDTO {
         this.date_to = date_to;
         this.email = email;
         this.hotel = hotel;
+    }
+    public BookingDTO(Integer id, Integer id_hotel, LocalDate date_from, LocalDate date_to, String email){
+        this.id = id;
+        this.id_hotel = id_hotel;
+        this.date_from = date_from;
+        this.date_to = date_to;
+        this.email = email;
     }
 
     public Integer getId() {

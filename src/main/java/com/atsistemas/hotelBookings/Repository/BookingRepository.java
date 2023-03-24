@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 public interface BookingRepository extends JpaRepository<Booking,Integer>, JpaSpecificationExecutor<Booking> {
-    @Query("SELECT b FROM Booking b WHERE b.hotel.id = :hotelId AND b.date_to BETWEEN :startDate AND :endDate")
+    @Query("SELECT b FROM Booking b WHERE b.hotel.id = :hotelId AND b.date_from >= :startDate AND b.date_to <= :endDate")
     List<Booking> findByHotelAndDates(@Param("hotelId") Integer hotelId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     @Query("SELECT b FROM Booking b JOIN FETCH b.hotel WHERE b.id = :bookingId")
