@@ -36,23 +36,23 @@ A continuación, se presentan algunas de las pruebas realizadas utilizando todos
 
   - GET [http://localhost:8080/hotels ](http://localhost:8080/hotels )
 
-- PUT – [127.0.0.1:8080/hotels](http://localhost:8080/hotels ) – Actualizar hotel, pasar contenido en cuerpo JSON
+- PUT – [http://localhost:8080/hotels ](http://localhost:8080/hotels ) – Actualizar hotel, pasar contenido en cuerpo JSON
 
-- POST – [127.0.0.1:8080/hotels](http://localhost:8080/hotels ) – Crear nuevo hotel , pasar contenido por JSON
+- POST – [http://localhost:8080/hotels ](http://localhost:8080/hotels ) – Crear nuevo hotel , pasar contenido por JSON
 
-- GET – 127.0.0.1:8080/hotels/{id} – Devuelve los datos de un Hotel, id por parámetros.
+- GET – [http://localhost:8080/hotels/{id} ](http://localhost:8080/hotels/{id} ) – Devuelve los datos de un Hotel, id por parámetros.
 
-- GET – 127.0.0.1:8080/hotels/availabilities – Consulta disponibilidad, parámetro fecha de entrada y salida obligatorios , nombre y categoría de hotel opcional ( todo por parámetros ).
+- GET – [http://localhost:8080/hotels/availabilities ](http://localhost:8080/hotels/availabilities ) – Consulta disponibilidad, parámetro fecha de entrada y salida obligatorios , nombre y categoría de hotel opcional ( todo por parámetros ).
 
-- POST – 127.0.0.1:8080/bookings/{hotelid} – Crea reserva , es necesario envíar el ID del hotel como parámetro, el resto JSON body
+- POST – [http://localhost:8080/bookings/{hotelid} ](http://localhost:8080/bookings/{hotelid} ) – Crea reserva , es necesario envíar el ID del hotel como parámetro, el resto JSON body
 
-- GET – 127.0.0.1:8080/bookings/{hotelId} – Consulta las reservas de un hotel en una fecha determinada.
+- GET – [http://localhost:8080/bookings/{hotelid} ](http://localhost:8080/bookings/{hotelid} ) – Consulta las reservas de un hotel en una fecha determinada.
 
-- GET – 127.0.0.1:8080/bookings/search/{id} – Consulta reserva por id , devolvemos reserva y el hotel asociado.
+- GET – [http://localhost:8080/bookings/search/{id} ](http://localhost:8080/bookings/search/{id} ) – Consulta reserva por id , devolvemos reserva y el hotel asociado.
 
-- DELETE – 127.0.0.1:8080/bookings/delete/{id} Borra la reserva según el ID facilitado.  
+- DELETE – [http://localhost:8080/bookings/delete/{id} ](http://localhost:8080/bookings/delete/{id} ) Borra la reserva según el ID facilitado.  
 
-- POST – 127.0.0.1:8080/availabilities/{hotelid}
+- POST – [http://localhost:8080/availabilities/{hotelid} ](http://localhost:8080/availabilities/{hotelid} )
 
 ## License
 
