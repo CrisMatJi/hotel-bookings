@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "04cf8162-2d0a-415f-a049-4ada656c9b79",
+		"name": "Hotel-Bookings",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listado de Hotel por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8080/hotels/1",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"hotels",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listado completo de hoteles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8080/hotels",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener las reservas de un hotel ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/bookings/1?startDate=2023-03-21&endDate=2023-03-23",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookings",
+						"1"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2023-03-21"
+						},
+						{
+							"key": "endDate",
+							"value": "2023-03-23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener las reservas por ID y el Hotel asociado ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/bookings/search/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookings",
+						"search",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar que hoteles tienen Disponibilidad según fecha de inicio y fin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/hotels/availabilities?startDate=2023-03-20&endDate=2023-03-25",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"hotels",
+						"availabilities"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2023-03-20"
+						},
+						{
+							"key": "endDate",
+							"value": "2023-03-25"
+						},
+						{
+							"key": "name",
+							"value": "Hotel final mod233",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Almacenar un Hotel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"id\": 1000,\n        \"name\": \"Un hotel nuevo 21.38 miercoles 22\",\n        \"category\": 5\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/hotels",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Abrir disponibilidad",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/availabilities/2?startDate=2023-03-20&endDate=2023-03-23&rooms=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"availabilities",
+						"2"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2023-03-20"
+						},
+						{
+							"key": "endDate",
+							"value": "2023-03-23"
+						},
+						{
+							"key": "rooms",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generar Reserva",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \n        \"date_from\": \"2023-03-10\",\n        \"date_to\": \"2023-03-11\",\n        \"email\": \"paso@paso.com\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/bookings/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookings",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar un Hotel",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"id\": 2,\n        \"name\": \"Un hotel Ouh Yeah Con paco\",\n        \"category\": 2\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/hotels",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar reserva por ID y habitaciones asociadas",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/bookings/delete/20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookings",
+						"delete",
+						"20"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
