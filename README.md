@@ -16,7 +16,7 @@ API rest de reserva de hoteles que permite a los usuarios reservar habitaciones 
 Para poner en funcionamiento la base de datos, se deben seguir los siguientes pasos:
 
 * 1.Descargar o clonar el repositorio.
-* 2.Ejecutar el archivo estructura.sql en su gestor de base de datos (por defecto, se ha nombrado la base de datos como hotelbookings).
+* 2.Ejecutar el archivo estructura.sql en su gestor de base de datos (por defecto, se ha nombrado la base de datos como hotel_bookings).
 * 3.Ejecutar el archivo datos.sql en su gestor de base de datos para insertar datos de ejemplo.
 * 4.Importar la colección hotelbookings.postman_collection.json en POSTMAN para poder realizar todas las operaciones predefinidas en nuestra APIrest.
 * 5.Para los test de integración se ha tomado la misma BD (PostgreSQL, con Rollback) , pero con nombre testDB. Para realizar todos los test , es necesario vaciar o crear nueva la BD e insertar el fichero datos.sql, para tener certeza de que se están realizando bien los test.
