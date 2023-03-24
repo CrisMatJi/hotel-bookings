@@ -34,11 +34,11 @@ A continuación, se presentan algunas de las pruebas realizadas utilizando todos
 
 * Consultar listado completo de hoteles, ordenados por ID:
 
-- GET http://localhost:8080/hotels 
+  - GET [http://localhost:8080/hotels ](http://localhost:8080/hotels )
 
-- PUT – 127.0.0.1:8080/hotels – Actualizar hotel, pasar contenido en cuerpo JSON
+- PUT – [127.0.0.1:8080/hotels](http://localhost:8080/hotels ) – Actualizar hotel, pasar contenido en cuerpo JSON
 
-- POST – 127.0.0.1:8080/hotels – Crear nuevo hotel , pasar contenido por JSON
+- POST – [127.0.0.1:8080/hotels](http://localhost:8080/hotels ) – Crear nuevo hotel , pasar contenido por JSON
 
 - GET – 127.0.0.1:8080/hotels/{id} – Devuelve los datos de un Hotel, id por parámetros.
 
