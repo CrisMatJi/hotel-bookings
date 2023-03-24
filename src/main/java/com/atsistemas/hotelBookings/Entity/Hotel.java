@@ -37,6 +37,10 @@ public class Hotel {
         this.name = name;
         this.category = category;
     }
+    public Hotel( String name, Integer category) {
+        this.name = name;
+        this.category = category;
+    }
 
     //Getters and setters
     public List<Availability> getAvailabilities() {

@@ -25,7 +25,7 @@ public class AvailabilityServiceTest {
     private AvailabilityRepository availabilityRepository;
 
     @Mock
-    private HotelService hotelService;
+    private HotelServiceImpl hotelService;
 
     @InjectMocks
     private AvailabilityServiceImpl availabilityService;

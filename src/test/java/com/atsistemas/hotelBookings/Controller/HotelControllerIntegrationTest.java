@@ -1,6 +1,5 @@
 package com.atsistemas.hotelBookings.Controller;
 
-import com.atsistemas.hotelBookings.Dto.HotelDTO;
 import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,15 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
+import javax.transaction.Transactional;
 import java.time.LocalDate;
-
 import static org.hamcrest.Matchers.hasSize;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -26,8 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
-@DirtiesContext
+@Transactional
 public class HotelControllerIntegrationTest {
 
     @Autowired
@@ -50,7 +44,7 @@ public class HotelControllerIntegrationTest {
     public void getHotelById_returnsCorrectHotel() throws Exception {
         // Arrange
         Integer hotelId = 1;
-        Hotel expectedHotel = new Hotel(hotelId, "Hotel Modificado", 4
+        Hotel expectedHotel = new Hotel(hotelId, "Hotel Plaza", 1
         );
 
         // Act and Assert
@@ -103,14 +97,14 @@ public class HotelControllerIntegrationTest {
 
         // Act and Assert
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/availabilities")
+                        .get("/hotels/availabilities")
                         .param("startDate", startDate.toString())
                         .param("endDate", endDate.toString())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].name").value("Hotel Modificado"))
-                .andExpect(jsonPath("$[0].category").value(4));
+                .andExpect(jsonPath("$[0].name").value("Hotel Plaza"))
+                .andExpect(jsonPath("$[0].category").value(1));
     }
 
 
