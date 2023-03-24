@@ -25,10 +25,10 @@ public class BookingServiceImpl implements BookingService {
      * Inyección de beans por constructor.
      */
     private BookingRepository bookingRepository;
-    private AvailabilityService availabilityService;
-    private HotelService hotelService;
+    private AvailabilityServiceImpl availabilityService;
+    private HotelServiceImpl hotelService;
 
-    BookingServiceImpl(BookingRepository bookingRepository, HotelService hotelService, AvailabilityService availabilityService) {
+    BookingServiceImpl(BookingRepository bookingRepository, HotelServiceImpl hotelService, AvailabilityServiceImpl availabilityService) {
         this.bookingRepository = bookingRepository;
         this.availabilityService = availabilityService;
         this.hotelService = hotelService;
