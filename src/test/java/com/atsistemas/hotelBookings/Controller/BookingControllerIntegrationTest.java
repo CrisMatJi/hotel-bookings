@@ -1,7 +1,6 @@
 package com.atsistemas.hotelBookings.Controller;
 
 import com.atsistemas.hotelBookings.Entity.Booking;
-import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Repository.BookingRepository;
 import com.atsistemas.hotelBookings.Service.Impl.AvailabilityServiceImpl;
 import com.atsistemas.hotelBookings.Service.Impl.HotelServiceImpl;
@@ -13,11 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,7 +26,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ActiveProfiles("test")
 @Transactional
 public class BookingControllerIntegrationTest {
-
+    /**
+     * Inyección de Mocks
+     */
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -42,8 +40,12 @@ public class BookingControllerIntegrationTest {
     @Autowired
     private AvailabilityServiceImpl availabilityService;
 
+    /**
+     * Test Creación de bookings controller.
+     * @throws Exception
+     */
     @Test
-    public void createBooking_ReturnsCreatedBooking() throws Exception {
+    public void createBookingTest() throws Exception {
         Booking booking = bookingRepository.findById(1).get();
         mockMvc.perform(post("/bookings/{hotelId}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -55,6 +57,10 @@ public class BookingControllerIntegrationTest {
                 .andExpect(jsonPath("$.email").value(booking.getEmail()));
     }
 
+    /**
+     * Test deletebooking controller.
+     * @throws Exception
+     */
     @Test
     public void testDeleteBookingById() throws Exception {
         mockMvc.perform(delete("/bookings/delete/{id}", 1))
@@ -63,8 +69,12 @@ public class BookingControllerIntegrationTest {
         assertThat(bookings.size()).isEqualTo(9);
     }
 
+    /**
+     * Test Getbooking Controller.
+     * @throws Exception
+     */
     @Test
-    public void getBookingWithHotel_ReturnsBookingWithHotel() throws Exception {
+    public void getBookingWithHotelTest() throws Exception {
         Booking savedBooking = bookingRepository.findById(1).get();
         mockMvc.perform(get("/bookings/search/{id}", 1))
                 .andExpect(status().isOk())
@@ -76,8 +86,12 @@ public class BookingControllerIntegrationTest {
                 .andExpect(jsonPath("$.email").value(savedBooking.getEmail()));
     }
 
+    /**
+     * Test getBookingsByHotelAndDates Controller.
+     * @throws Exception
+     */
     @Test
-    public void getBookingsByHotelAndDates_ReturnsBookingsWithHotelWithinDateRange() throws Exception {
+    public void getBookingsByHotelAndDatesTest() throws Exception {
         Booking booking = bookingRepository.findById(10).get();
         mockMvc.perform(get("/bookings/{id}", 5)
                         .param("startDate", "2023-04-06")

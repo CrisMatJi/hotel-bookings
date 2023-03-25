@@ -23,7 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 public class HotelControllerIntegrationTest {
-
+    /**
+     * Inyección de Mocks y repository
+     */
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -31,23 +33,28 @@ public class HotelControllerIntegrationTest {
     @Autowired
     private HotelRepository hotelRepository;
 
+    /**
+     * Test controller findall(), comprobamos tamaño de la BD que ya conocemos.
+     * @throws Exception
+     */
     @Test
     public void testGetAllHotels() throws Exception {
         mockMvc.perform(get("/hotels")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(10)));
-
     }
 
+    /**
+     * Test GetHotelById controlando que devuelve el que conocemos.
+     * @throws Exception
+     */
     @Test
-    public void getHotelById_returnsCorrectHotel() throws Exception {
-        // Arrange
+    public void getHotelByIdTest() throws Exception {
         Integer hotelId = 1;
         Hotel expectedHotel = new Hotel(hotelId, "Hotel Plaza", 1
         );
-
-        // Act and Assert
+        //----------------------------------------------------------------
         mockMvc.perform(get("/hotels/" + hotelId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -55,11 +62,14 @@ public class HotelControllerIntegrationTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(expectedHotel)));
     }
 
+    /**
+     * Test CreateHotel controller.
+     * @throws Exception
+     */
     @Test
-    public void createHotel_returnsCreatedHotel() throws Exception {
+    public void createHotelTest() throws Exception {
         Hotel hotel = new Hotel(null, "New Hotel", 3);
-
-        // Act and Assert
+        //----------------------------------------------------------------
         mockMvc.perform(post("/hotels")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(hotel)))
@@ -69,16 +79,18 @@ public class HotelControllerIntegrationTest {
                 .andExpect(jsonPath("$.category").value(hotel.getCategory()));
     }
 
+    /**
+     * Test update Hotel Controller.
+     * @throws Exception
+     */
     @Test
     public void updateHotel_returnsUpdatedHotel() throws Exception {
-        // Arrange
         Integer hotelId = 1;
         Hotel originalHotel = new Hotel(hotelId, "Hotel Plaza", 2);
         hotelRepository.save(originalHotel);
-
+        //----------------------------------------------------------------
         Hotel updatedHotel = new Hotel(hotelId, "Hotel Modificado", 4);
-
-        // Act and Assert
+        //----------------------------------------------------------------
         mockMvc.perform(put("/hotels")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedHotel)))
@@ -89,13 +101,15 @@ public class HotelControllerIntegrationTest {
                 .andExpect(jsonPath("$.category").value(updatedHotel.getCategory()));
     }
 
+    /**
+     * Consulta de disponibilidad test controller.
+     * @throws Exception
+     */
     @Test
-    public void consultAvailability_returnsCorrectHotels() throws Exception {
-        // Arrange
+    public void consultAvailabilityTest() throws Exception {
         LocalDate startDate = LocalDate.of(2023, 4, 1);
         LocalDate endDate = LocalDate.of(2023, 4, 2);
-
-        // Act and Assert
+        //----------------------------------------------------------------
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/hotels/availabilities")
                         .param("startDate", startDate.toString())
@@ -106,6 +120,4 @@ public class HotelControllerIntegrationTest {
                 .andExpect(jsonPath("$[0].name").value("Hotel Plaza"))
                 .andExpect(jsonPath("$[0].category").value(1));
     }
-
-
 }
