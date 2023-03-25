@@ -36,9 +36,7 @@ class AvailabilityControllerIntegrationTest {
         LocalDate startDate = LocalDate.of(2023, 3, 23);
         LocalDate endDate = LocalDate.of(2023, 3, 25);
         Integer rooms = 2;
-
         doNothing().when(availabilityServiceImpl).createAvailability(hotelId, startDate, endDate, rooms);
-
         // Respuesta
         MvcResult result = mockMvc.perform(post("/availabilities/{hotelId}", hotelId)
                         .param("startDate", startDate.toString())
@@ -46,10 +44,6 @@ class AvailabilityControllerIntegrationTest {
                         .param("rooms", rooms.toString()))
                 .andExpect(status().isCreated())
                 .andReturn();
-
-        // Verify that the service method was called with the expected parameters
         verify(availabilityServiceImpl).createAvailability(hotelId, startDate, endDate, rooms);
-
-
     }
 }

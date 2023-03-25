@@ -2,12 +2,10 @@ package com.atsistemas.hotelBookings.Service.Impl;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import com.atsistemas.hotelBookings.Entity.Availability;
 import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Exception.SaveErrorException;
 import com.atsistemas.hotelBookings.Repository.AvailabilityRepository;
-import com.atsistemas.hotelBookings.Service.HotelService;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class AvailabilityServiceTest {
-
+    /**
+     * Tests availability
+     */
     @Mock
     private AvailabilityRepository availabilityRepository;
 
@@ -34,6 +34,9 @@ public class AvailabilityServiceTest {
     private static final LocalDate END_DATE = LocalDate.of(2023, 4, 3);
     private static final Integer ROOMS = 2;
 
+    /**
+     * Preparación del testing
+     */
     @BeforeEach
     public void initMocks() {
         MockitoAnnotations.openMocks(this);
@@ -46,6 +49,10 @@ public class AvailabilityServiceTest {
                 });
     }
 
+    /**
+     * Test para probar la apertura de disponibilidad.
+     * @throws SaveErrorException
+     */
     @Test
     public void testCreateAvailability() throws SaveErrorException {
         Hotel hotel = new Hotel();
@@ -60,6 +67,9 @@ public class AvailabilityServiceTest {
         Assertions.assertEquals(11, existingAvailability.getRooms());
     }
 
+    /**
+     * Test para comprobar la disponibilidad
+     */
     @Test
     public void testGetAvailability() {
         when(availabilityRepository.findByHotelAndDate(any(Integer.class), any(LocalDate.class)))
@@ -69,6 +79,9 @@ public class AvailabilityServiceTest {
         Assertions.assertTrue(result.isEmpty());
     }
 
+    /**
+     * Test donde almacenamos disponibilidad.
+     */
     @Test
     public void testSaveAvailability() {
         Availability availability = new Availability();

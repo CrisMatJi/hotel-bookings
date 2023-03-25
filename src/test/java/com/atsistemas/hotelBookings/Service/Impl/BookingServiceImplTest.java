@@ -6,8 +6,6 @@ import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Exception.ErrorQueryException;
 import com.atsistemas.hotelBookings.Exception.SaveErrorException;
 import com.atsistemas.hotelBookings.Repository.BookingRepository;
-import com.atsistemas.hotelBookings.Service.AvailabilityService;
-import com.atsistemas.hotelBookings.Service.HotelService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.internal.util.Assert;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 public class BookingServiceImplTest {
-
+    /**
+     * Inyección de Mocks
+     */
     @Mock
     private BookingRepository bookingRepository;
 
@@ -43,7 +42,9 @@ public class BookingServiceImplTest {
     private Integer hotelId;
     private Hotel hotel;
 
-
+    /**
+     * Preparación de test
+     */
     @BeforeEach
     public void setUp() {
         hotelId = 1;
@@ -62,12 +63,14 @@ public class BookingServiceImplTest {
         availability.setRooms(4);
         availability.setDate(LocalDate.of(2023,04,15));
         availability.setId_hotel(1);
-
-
     }
 
+    /**
+     * Test de creación de bookings
+     * @throws SaveErrorException
+     */
     @Test
-    public void createBooking_shouldReturnBooking() throws SaveErrorException {
+    public void createBookingTest() throws SaveErrorException {
         Availability availability = new Availability();
         availability.setId_hotel(hotelId);
         availability.setDate(booking.getDate_from());
@@ -82,30 +85,46 @@ public class BookingServiceImplTest {
         Mockito.verify(bookingRepository, Mockito.times(1)).save(booking);
     }
 
+    /**
+     * Creación de bookings controlando excepciones.
+     * @throws SaveErrorException
+     */
     @Test
-    public void createBooking_shouldThrowException() throws SaveErrorException {
+    public void createBooking_ExceptionTest() throws SaveErrorException {
         Mockito.when(hotelService.getHotelById(hotelId)).thenReturn(hotel);
         Mockito.when(availabilityService.getAvailability(hotelId, booking.getDate_from())).thenReturn(Optional.of(new Availability()));
         assertThrows(Exception.class, () -> bookingService.createBooking(booking, hotelId));
     }
 
+    /**
+     * Test de Query controlando el retorno
+     * @throws ErrorQueryException
+     */
     @Test
-    public void getBookingsByHotelAndDates_shouldReturnBookingsList() throws ErrorQueryException {
+    public void getBookingsByHotelAndDatesTest() throws ErrorQueryException {
         Mockito.when(bookingRepository.findByHotelAndDates(hotelId, booking.getDate_from(), booking.getDate_to())).thenReturn(List.of(booking));
         bookingService.getBookingsByHotelAndDates(hotelId, booking.getDate_from(), booking.getDate_to());
         Mockito.verify(bookingRepository, Mockito.times(1)).findByHotelAndDates(hotelId, booking.getDate_from(), booking.getDate_to());
     }
 
+    /**
+     * Test de Query controlando el retorno.
+     * @throws ErrorQueryException
+     */
     @Test
-    public void getBookingWithHotel_shouldReturnBooking() throws ErrorQueryException {
+    public void getBookingWithHotelTest() throws ErrorQueryException {
         Mockito.when(bookingRepository.findBookingWithHotelById(1)).thenReturn(Optional.of(booking));
         Booking result = bookingService.getBookingWithHotel(1);
         Mockito.verify(bookingRepository, Mockito.times(1)).findBookingWithHotelById(1);
         Assertions.assertEquals(booking, result);
     }
 
+    /**
+     * Test DeleteBooking , comprobando disponibilidad.
+     * @throws SaveErrorException
+     */
     @Test
-    public void deleteBookingById_shouldDeleteBookingAndSetAvailability() throws SaveErrorException {
+    public void deleteBookingByIdTest() throws SaveErrorException {
         Optional<Booking> optionalBooking = Optional.of(booking);
         Mockito.when(bookingRepository.findById(1)).thenReturn(optionalBooking);
         Optional<Availability> optionalAvailability = Optional.of(availability);

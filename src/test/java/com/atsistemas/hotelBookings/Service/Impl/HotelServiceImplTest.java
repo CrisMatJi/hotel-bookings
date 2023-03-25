@@ -4,18 +4,12 @@ import com.atsistemas.hotelBookings.Entity.Hotel;
 import com.atsistemas.hotelBookings.Exception.HotelNotFoundException;
 import com.atsistemas.hotelBookings.Exception.SaveErrorException;
 import com.atsistemas.hotelBookings.Repository.HotelRepository;
-import org.aspectj.weaver.ast.Literal;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.jpa.domain.Specification;
-
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,13 +18,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class HotelServiceImplTest {
-
+    /**
+     * Inyección de mocks
+     */
     @Mock
     private HotelRepository hotelRepositoryMock;
 
     @InjectMocks
     private HotelServiceImpl hotelService;
 
+    /**
+     * Test Findall() Hotels.
+     */
     @Test
     public void testGetAllHotels() {
         Hotel hotel1 = new Hotel();
@@ -56,6 +55,10 @@ public class HotelServiceImplTest {
         assertEquals(4, resultList.get(1).getCategory());
     }
 
+    /**
+     * Test FindbyID hotel
+     * @throws HotelNotFoundException
+     */
     @Test
     public void testGetHotelById() throws HotelNotFoundException {
         Hotel hotel = new Hotel();
@@ -71,6 +74,9 @@ public class HotelServiceImplTest {
         assertEquals(3, result.getCategory());
     }
 
+    /**
+     * Test GetHotel HotelNotFoundIdException
+     */
     @Test
     public void testGetHotelByIdException() {
         //----------------------------------------------------------------
@@ -81,7 +87,10 @@ public class HotelServiceImplTest {
         });
     }
 
-
+    /**
+     * Test save hotel
+     * @throws SaveErrorException
+     */
     @Test
     public void testSaveHotel() throws SaveErrorException {
         Hotel hotel = new Hotel();
@@ -96,26 +105,26 @@ public class HotelServiceImplTest {
         assertEquals(3, result.getCategory());
     }
 
+    /**
+     * Test save hotel , controlando excepcion.
+     * @throws SaveErrorException
+     */
     @Test
     public void testSaveHotelException() throws SaveErrorException {
-        // Given
         Hotel hotel = new Hotel();
         hotel.setName("Hotel 1");
         hotel.setCategory(3);
-
+        //----------------------------------------------------------------
         Mockito.when(hotelRepositoryMock.save(hotel)).thenThrow(new RuntimeException());
-
-        // When
-
         assertThrows(SaveErrorException.class, () -> {
             hotelService.saveHotel(hotel);
         });
-
-
-        // Then
-        // SaveErrorException expected
     }
 
+    /**
+     * Test para updatear Hotel.
+     * @throws SaveErrorException
+     */
     @Test
     public void testUpdateHotel() throws SaveErrorException {
         Hotel hotel = new Hotel();
